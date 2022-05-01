@@ -2,3 +2,8 @@
 /public/build/
 
 .DS_Store
+
+# firebase deploy!
+.firebase/
+.firebaserc
+firebase.json
