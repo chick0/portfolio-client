@@ -9,9 +9,6 @@ export function getProject(uuid) {
 }
 
 export function getProjects(page){
-    if(page == undefined){
-        page = 1;
-    }
-
-    return page;
+    if(page == undefined){ page = 1; }
+    return `${HOST}/projects?page=${page}`;
 }
