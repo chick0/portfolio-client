@@ -27,6 +27,10 @@
 <section class="section">
     <div class="container">
         <h1 class="title is-1">chick_0</h1>
+
+        <div class="block">
+            <a class="button is-dark is-medium" href="https://github.com/chick0" target="_blank">Github</a>
+        </div>
     </div>
 </section>
 
