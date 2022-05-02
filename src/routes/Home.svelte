@@ -34,10 +34,12 @@
         <h1 class="title is-1" on:click={nameClicked}>chick_0</h1>
         <div class="block">
             <a class="button is-dark is-medium" href="https://github.com/chick0" target="_blank">Github</a>
+            <a class="button is-link is-medium" href="mailto:chick_0@ch1ck.xyz" target="_blank">Email</a>
         </div>
     {#if isLogined() == true}
         <div class="box">
-            <p>로그인 상태</p>
+            <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트 등록</button>
+            <button class="button is-info is-light">로그인 기록 조회하기</button>
         </div>
     {/if}
     </div>
