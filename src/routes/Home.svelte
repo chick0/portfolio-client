@@ -1,20 +1,24 @@
 <script>
     import { push } from 'svelte-spa-router';
     import { getProjects } from '../url.js';
-    export let params = {};
 
     function moveTo(uuid){
         push(`/project/${uuid}`);
+    }
+
+    let nameCounter = 0;
+    function nameClicked(){
+        if(nameCounter == 3){
+            push("/auth");
+        } else {
+            nameCounter += 1;
+        }
     }
 
     let page = 1;
     let pageData = {};
     let projects = [];
     let projectsLoaded = false;
-
-    if(Number(params.page) > 0 ){
-        page = Number(params.page);
-    }
 
     let url = getProjects(page);
     fetch(url).then((resp) => resp.json()).then((data) => {
@@ -26,8 +30,7 @@
 
 <section class="section">
     <div class="container">
-        <h1 class="title is-1">chick_0</h1>
-
+        <h1 class="title is-1" on:click={nameClicked}>chick_0</h1>
         <div class="block">
             <a class="button is-dark is-medium" href="https://github.com/chick0" target="_blank">Github</a>
         </div>
