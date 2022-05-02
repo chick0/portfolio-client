@@ -1,12 +1,13 @@
 <script>
     import { push } from 'svelte-spa-router';
     import { getProjects } from '../url.js';
+    import { isLogined } from '../storage.js';
 
     function moveTo(uuid){
         push(`/project/${uuid}`);
     }
 
-    let nameCounter = 0;
+    let nameCounter = 1;
     function nameClicked(){
         if(nameCounter == 3){
             push("/auth");
@@ -34,6 +35,11 @@
         <div class="block">
             <a class="button is-dark is-medium" href="https://github.com/chick0" target="_blank">Github</a>
         </div>
+    {#if isLogined() == true}
+        <div class="box">
+            <p>로그인 상태</p>
+        </div>
+    {/if}
     </div>
 </section>
 
