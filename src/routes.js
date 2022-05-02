@@ -6,7 +6,7 @@ import Auth from './routes/Auth.svelte';
 // Routes
 export default {
     '/': Home,
-    '/project/:uuid/:page?': Project,
+    '/project/:uuid': Project,
     '/auth': Auth,
 
     // '*': NotFound,
