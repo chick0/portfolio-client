@@ -2,6 +2,7 @@
     import { push } from 'svelte-spa-router';
     import { Renderer, setOptions, parse } from "marked";
     import { getProject } from '../url.js';
+    import { isLogined } from '../storage.js';
     export let params = {};
 
     let projectLoaded = false;
@@ -44,6 +45,13 @@
             <a class="button is-link" href="{project.web}" target="_blank">Web</a>
         {/if}
         </div>
+
+        {#if isLogined() == true}
+        <div class="box">
+            <button class="button is-warning" on:click={()=>{push(`/project/${params.uuid}/edit`)}}>프로젝트 수정</button>
+            <button class="button is-danger" on:click={()=>{push(`/project/${params.uuid}/delete`)}}>프로젝트 삭제</button>
+        </div>
+        {/if}
     </div>
 </section>
 

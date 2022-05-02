@@ -63,7 +63,7 @@
                 <div class="block">
                 {#each p.tags as tag}
                     <button class="button is-warning"
-                        on:click|preventDefault={()=>{alert(`tag:${tag}`)}}
+                        on:click|preventDefault={()=>{console.log(`tag:${tag}`)}}
                     >
                         {tag}
                     </button>&nbsp;

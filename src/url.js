@@ -24,3 +24,7 @@ export function getTokenVerify(){
 export function getHistory(){
     return `${HOST}/token/history`;
 }
+
+export function createProject(){
+    return `${HOST}/project`;
+}
