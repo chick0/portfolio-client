@@ -20,3 +20,7 @@ export function getVerify(){
 export function getTokenVerify(){
     return `${HOST}/token/verify`;
 }
+
+export function getHistory(){
+    return `${HOST}/token/history`;
+}
