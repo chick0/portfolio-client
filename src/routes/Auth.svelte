@@ -16,7 +16,6 @@
                 push("/");
             } else if(v === false){
                 // 인증 토큰 만료됨
-                alert("인증 토큰이 만료되었습니다.");
                 isLoginChecked = true;
             }
         });

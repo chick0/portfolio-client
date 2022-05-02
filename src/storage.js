@@ -3,6 +3,10 @@ import { tokenStatus } from './store.js';
 
 const TOKEN_KEY = "mypt_token";
 
+export function clearToken(){
+    localStorage.removeItem(TOKEN_KEY);
+}
+
 export function setToken(token){
     localStorage.setItem(TOKEN_KEY, token);
 }
@@ -32,6 +36,13 @@ export function checkToken(){
             "x-auth": token,
         }
     }).then((resp) => resp.json()).then((data) => {
-        tokenStatus.set(data.status);
+        let status = data.status;
+        if(status == undefined){
+            clearToken();
+            alert(data.message);
+            tokenStatus.set(false);
+        } else {
+            tokenStatus.set(data.status);
+        }
     });
 }
