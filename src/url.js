@@ -1,4 +1,4 @@
-const HOST = "https://mypt.ch1ck.xyz";
+const HOST = isProduction === true ? "https://mypt.ch1ck.xyz" : "http://localhost:5000";
 
 export function getProject(uuid) {
     if(uuid.length == 36){

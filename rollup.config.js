@@ -1,4 +1,5 @@
 import svelte from 'rollup-plugin-svelte';
+import replace from "@rollup/plugin-replace";
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
@@ -17,10 +18,10 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('python', ['-m', 'http.server', '--directory', './public'], {
+			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
-			});
+			});            
 
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
@@ -37,6 +38,9 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+        replace({
+            isProduction: production,
+        }),
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
