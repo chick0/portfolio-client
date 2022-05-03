@@ -11,7 +11,7 @@
     let project = {
         title: "[작성중] 제목 없는 프로젝트",
         dt: '2004-05-21',
-        tags: '태그',
+        tags: '작성중',
         web: 'https://',
         github: 'https://github.com/',
         content: {
