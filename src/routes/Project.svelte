@@ -43,8 +43,11 @@
                     if(data.status == true){
                         push("/");
                     }
+
+                    projectLoaded = true;
                 });
 
+                projectLoaded = false;
                 return;
             }
         }
