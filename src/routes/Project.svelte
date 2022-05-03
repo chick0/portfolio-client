@@ -24,6 +24,7 @@
         fetch(url).then((resp) => resp.json()).then((data) => {
             Object.assign(project, data);
             projectLoaded = true;
+            document.title = project.title;
         });
     } else {
         // 올바른 프로젝트 ID가 아님

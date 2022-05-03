@@ -1,6 +1,15 @@
 <script>
     import Router from 'svelte-spa-router';
+    import { location } from 'svelte-spa-router';
     import routes from './routes';
+
+    location.subscribe((path) => {
+        if(path.startsWith("/project")){
+            // project route will change the title
+        } else {
+            document.title = 'chick_0';
+        }
+    });
 </script>
 
 <Router {routes} />
