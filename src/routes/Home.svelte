@@ -72,7 +72,9 @@
             }
         } else {
             for(let tmp = page; tmp < page + 5; tmp++){
-                pages.push(tmp);
+                if(tmp <= pageData.max){
+                    pages.push(tmp);
+                }
             }
         }
 
@@ -83,7 +85,7 @@
             // 마지막 페이지보다 4만큼 작은 수 부터 목록에 추가
             for(let tmp = lastPage - 4; tmp <= lastPage; tmp++){
                 // 단 중복되어서는 안되고, 1보다 크고 최대 페이지 보다는 작아야 함
-                if(pages.indexOf(tmp) == -1 && 1 <= page <= pageData.max){
+                if(pages.indexOf(tmp) == -1 && 1 <= tmp && tmp <= pageData.max){
                     pages.push(tmp);
                 }
             }
