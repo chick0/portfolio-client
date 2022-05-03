@@ -152,8 +152,8 @@
 <section class="section">
     <div class="container">
         <nav class="pagination is-medium is-centered">
-            <button class="pagination-previous" style="background-color:#FFF;" on:click={()=>{updatePage(1)}}>&Lt;</button>
-            <button class="pagination-next" style="background-color:#FFF;" on:click={()=>{updatePage(pageData.max)}}>&Gt;</button>
+            <button class="pagination-previous" style="background-color:#FFF;" on:click={()=>{updatePage(page - 1)}}>&Lt;</button>
+            <button class="pagination-next" style="background-color:#FFF;" on:click={()=>{updatePage(page + 1)}}>&Gt;</button>
             <ul class="pagination-list">
             {#each getCenterPage() as index}
                 <li>
