@@ -13,17 +13,20 @@
     <section class="section">
         <div class="container">
             <h1 class="title is-1">404</h1>
-            <p>해당 페이지를 찾지 못함</p>
-
-            <div class="content is-large">
-                <p>잠시후 프로젝트 목록 페이지로 이동합니다...</p>
-                <a href="/">지금 이동하기</a>
+            <p class="subtitle">해당 페이지를 찾지 못함</p>
+            <div class="block">
+                <p>잠시후 프로젝트 목록 페이지로 이동합니다.</p>
             </div>
         </div>
     </section>
 
     <script>
-        setTimeout(function(){ location.replace("/"); }, 950);
+        let newPath = "/";
+        if(location.pathname.startsWith("/project")){
+            newPath = "/#" + location.pathname;
+        }
+
+        setTimeout(function(){ location.replace(newPath); }, 950);
     </script>
 </body>
 </html>

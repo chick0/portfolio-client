@@ -5,6 +5,7 @@ import Project from './routes/Project.svelte';
 import NewProject from './routes/NewProject.svelte';
 import ProjectEdit from './routes/ProjectEdit.svelte';
 import History from './routes/History.svelte';
+import NotFound from './NotFound.svelte';
 
 // Routes
 export default {
@@ -17,5 +18,5 @@ export default {
     '/new-project': NewProject,
     '/project/:uuid/edit': ProjectEdit,
 
-    // '*': NotFound,
+    '*': NotFound,
 };
