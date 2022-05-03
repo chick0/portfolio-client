@@ -28,3 +28,7 @@ export function getHistory(){
 export function createProject(){
     return `${HOST}/project`;
 }
+
+export function revokeCode(code_id){
+    return `${HOST}/token/code/${code_id}`;
+}

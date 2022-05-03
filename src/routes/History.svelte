@@ -1,6 +1,6 @@
 <script>
     import { push } from 'svelte-spa-router';
-    import { getHistory } from '../url.js';
+    import { getHistory, revokeCode } from '../url.js';
     import { getToken } from '../storage.js';
 
     function parseTimeStamp(timestamp){
@@ -18,20 +18,43 @@
     let history = [];
     let isHistoryLoaded = false;
 
-    fetch(getHistory(), {
-        method: "GET",
-        headers: {
-            "x-auth": getToken(),
+    function fetchHistory(){
+        fetch(getHistory(), {
+            method: "GET",
+            headers: {
+                "x-auth": getToken(),
+            }
+        }).then((resp) => resp.json()).then((data) => {
+            if(data.history != undefined){
+                Object.assign(history, data.history);
+                isHistoryLoaded = true;
+            } else {
+                alert(data.message);
+                push("/");
+            }
+        });
+    }
+
+    fetchHistory();
+
+    function askRevokeCode(code_id){
+        if(confirm("해당 코드를 취소하시겠습니까?")){
+            fetch(revokeCode(code_id), {
+                method: "DELETE",
+                headers: {
+                    'x-auth': getToken()
+                }
+            }).then((resp) => resp.json()).then((data) => {
+                if(data.status != undefined && data.status == true){
+                    alert("해당 코드가 취소되었습니다.");
+                    isHistoryLoaded = false;
+                    fetchHistory();
+                } else {
+                    alert(data.message);
+                }
+            })
         }
-    }).then((resp) => resp.json()).then((data) => {
-        if(data.history != undefined){
-            Object.assign(history, data.history);
-            isHistoryLoaded = true;
-        } else {
-            alert(data.message);
-            push("/");
-        }
-    });
+    }
 </script>
 
 <section class="section">
@@ -45,11 +68,13 @@
 <section class="section">
     <div class="container">
         {#each history as code}
-        <div class="box">
+        <div class="box" on:click={()=>{askRevokeCode(code.id)}}>
             <div class="content is-medium">
                 <p>요청 IP : {code.ip}</p>
                 {#if code.code == "-"}
                 <p>인증 코드 : <b>토큰 연장 요청</b></p>
+                {:else if code.code == "#"}
+                <p>인증 코드 : <b>취소된 요청</b></p>
                 {:else}
                 <p>인증 코드 : {code.code}</p>
                 {/if}
