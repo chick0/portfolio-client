@@ -2,7 +2,7 @@
     import { push } from 'svelte-spa-router';
     import { Renderer, setOptions, parse } from "marked";
     import { getProject } from '../url.js';
-    import { isLogined } from '../storage.js';
+    import { isLogined, getToken } from '../storage.js';
     export let params = {};
 
     let projectLoaded = false;
@@ -29,6 +29,28 @@
         // 올바른 프로젝트 ID가 아님
         push("/");
     }
+
+    function projectDelete(){
+        if(confirm("해당 프로젝트를 삭제하시겠습니까? (1/2)")){
+            if(confirm("해당 프로젝트를 정말로 삭제하시겠습니까? (2/2)")){
+                fetch(url, {
+                    method: "DELETE",
+                    headers: {
+                        'x-auth': getToken()
+                    }
+                }).then((resp) => resp.json()).then((data) => {
+                    alert(data.message);
+                    if(data.status == true){
+                        push("/");
+                    }
+                });
+
+                return;
+            }
+        }
+
+        alert("취소되었습니다.");
+    }
 </script>
 
 {#if projectLoaded == true}
@@ -49,7 +71,7 @@
         {#if isLogined() == true}
         <div class="box">
             <button class="button is-warning" on:click={()=>{push(`/project/${params.uuid}/edit`)}}>프로젝트 수정</button>
-            <button class="button is-danger" on:click={()=>{push(`/project/${params.uuid}/delete`)}}>프로젝트 삭제</button>
+            <button class="button is-danger" on:click={projectDelete}>프로젝트 삭제</button>
         </div>
         {/if}
     </div>
