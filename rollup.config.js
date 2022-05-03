@@ -39,7 +39,11 @@ export default {
 	},
 	plugins: [
         replace({
-            isProduction: production,
+            preventAssignment: true,
+            values: {
+                isProduction: production,
+                commitId: require('child_process').execSync('git rev-parse HEAD').toString().trim(),
+            },
         }),
 		svelte({
 			compilerOptions: {
