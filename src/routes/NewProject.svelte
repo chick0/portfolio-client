@@ -7,10 +7,13 @@
         push("/");
     }
 
+    let d = new Date();
+    let year = d.getFullYear();
+
     let url = createProject();
     let project = {
         title: "[작성중] 제목 없는 프로젝트",
-        dt: '2004-05-21',
+        dt: `${year}-05-21`,
         tags: '작성중',
         web: 'https://',
         github: 'https://github.com/',
