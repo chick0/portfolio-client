@@ -1,9 +1,12 @@
 <script>
+    import { get } from "svelte/store";
     import { push } from 'svelte-spa-router';
     import { getProjects } from '../url.js';
     import { isLogined } from '../storage.js';
+    import { pageStore } from '../store.js';
 
     function moveTo(uuid){
+        pageStore.set(page);
         push(`/project/${uuid}`);
     }
 
@@ -16,7 +19,7 @@
         }
     }
 
-    let page = 1;
+    let page = get(pageStore);
     let pageData = {};
     let projects = [];
     let projectsLoaded = false;
