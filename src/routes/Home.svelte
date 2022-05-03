@@ -7,8 +7,6 @@
         push(`/project/${uuid}`);
     }
 
-    let devMode = isProduction == false;
-
     let nameCounter = 1;
     function nameClicked(){
         if(nameCounter == 3){
@@ -38,7 +36,8 @@
             <a class="button is-dark is-medium" href="https://github.com/chick0" target="_blank">Github</a>
             <a class="button is-link is-medium" href="mailto:chick_0@ch1ck.xyz" target="_blank">Email</a>
         </div>
-    {#if devMode == true}
+    <!-- svelte-ignore missing-declaration -->
+    {#if isProduction == false}
         <div class="notification is-danger is-light">
             해당 빌드는 테스트 모드 입니다.
         </div>
