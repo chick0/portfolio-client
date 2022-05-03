@@ -43,6 +43,7 @@ export default {
             values: {
                 isProduction: production,
                 commitId: require('child_process').execSync('git rev-parse HEAD').toString().trim(),
+                gitRepoURL: require('child_process').execSync('git remote get-url origin').toString().trim(),
             },
         }),
 		svelte({
