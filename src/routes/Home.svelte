@@ -136,7 +136,7 @@
             <div class="box" on:click={()=>{moveTo(p.uuid)}}>
                 <h2 class="title is-4">{p.title}</h2>
                 <p class="subtitle">{p.date}</p>
-                <div class="block">
+                <div class="block is-hidden-mobile">
                 {#each p.tags as tag}
                     <button class="button is-warning"
                         on:click|preventDefault={()=>{console.log(`tag:${tag}`)}}
