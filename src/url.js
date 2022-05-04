@@ -13,6 +13,10 @@ export function getProjects(page){
     return `${HOST}/projects?page=${page}`;
 }
 
+export function getLogin(){
+    return `${HOST}/auth`;
+}
+
 export function getVerify(){
     return `${HOST}/auth/verify`;
 }
