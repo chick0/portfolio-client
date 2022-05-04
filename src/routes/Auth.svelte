@@ -9,9 +9,9 @@
 
     // 만약 로그인해서 토큰이 있다면 토큰 검증하기
     if(isLogined() === true){
-        tokenStatus.set(null);
+        tokenStatus.set("checkRequired");
         tokenStatus.subscribe((v) => {
-            if(v == null){
+            if(v == "checkRequired"){
                 // 인증 토큰 검증하기
                 checkToken();
             } else if(v === true){
@@ -109,7 +109,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-danger is-light is-large is-fullwidth" on:click={doLogin}>다음</button>
+                <button class="button is-primary is-light is-large is-fullwidth" on:click={doLogin}>다음</button>
             </div>
         </div>
     </div>
@@ -123,7 +123,7 @@
         <div class="field">
             <label class="label" for="code-input">인증 코드</label>
             <div class="control">
-                <input id="code-input" class="input is-danger" type="tel" bind:value={code}>
+                <input id="code-input" class="input" type="tel" bind:value={code}>
             </div>
         </div>
         <div class="field">
