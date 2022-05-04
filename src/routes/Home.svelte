@@ -13,6 +13,7 @@
     let nameCounter = 1;
     function nameClicked(){
         if(nameCounter == 3){
+            nameCounter += 1;
             push("/auth");
         } else {
             nameCounter += 1;
