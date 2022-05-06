@@ -58,6 +58,7 @@ export function renewToken(){
     }).then((resp) => resp.json()).then((data) => {
         let newToken = data.token;
         if(newToken == undefined){
+            clearToken();
             alert(data.message);
         } else {
             alert("인증 토큰이 연장되었습니다.");
