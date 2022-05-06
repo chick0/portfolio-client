@@ -36,3 +36,7 @@ export function createProject(){
 export function revokeCode(code_id){
     return `${HOST}/token/code/${code_id}`;
 }
+
+export function getRenewToken(){
+    return `${HOST}/token/renew`;
+}

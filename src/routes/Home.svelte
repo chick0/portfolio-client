@@ -2,7 +2,7 @@
     import { get } from "svelte/store";
     import { push } from 'svelte-spa-router';
     import { getProjects } from '../url.js';
-    import { isLogined } from '../storage.js';
+    import { isLogined, renewToken } from '../storage.js';
     import { pageStore } from '../store.js';
 
     function moveTo(uuid){
@@ -113,9 +113,10 @@
         </div>
     {/if}
     {#if isLogined() == true}
-        <div class="box">
+        <div class="box buttons">
             <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트 등록</button>
             <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록 조회하기</button>
+            <button class="button is-warning is-light" on:click={renewToken}>로그인 연장하기</button>
         </div>
     {/if}
     </div>
@@ -136,13 +137,13 @@
             <div class="box" on:click={()=>{moveTo(p.uuid)}}>
                 <h2 class="title is-4">{p.title}</h2>
                 <p class="subtitle">{p.date}</p>
-                <div class="block is-hidden-mobile">
+                <div class="block buttons">
                 {#each p.tags as tag}
                     <button class="button is-warning"
                         on:click|preventDefault={()=>{console.log(`tag:${tag}`)}}
                     >
                         {tag}
-                    </button>&nbsp;
+                    </button>
                 {/each}
                 </div>
             </div>
