@@ -1,13 +1,45 @@
 <script>
     import { get } from "svelte/store";
     import { push } from 'svelte-spa-router';
-    import { getProjects } from '../url.js';
+    import { getProjects, getProjectsWithTag } from '../url.js';
     import { isLogined, renewToken } from '../storage.js';
     import { pageStore } from '../store.js';
 
-    function moveTo(uuid){
-        pageStore.set(page);
-        push(`/project/${uuid}`);
+    let pushLock = false;
+    let tagFilter = undefined;
+    let defaultPage = undefined;
+
+    function projectMove(uuid){
+        if(pushLock === false){
+            pageStore.set(page);
+            push(`/project/${uuid}`);
+        }
+    }
+
+    function showTag(tag){
+        pushLock = true;
+        tagFilter = tag;
+        document.getElementById("projects-section").scrollIntoView({
+            behavior: 'smooth'
+        });
+
+        // 태그 없는 상태의 페이지 정보 다른 변수 저장
+        defaultPage = page;
+        // 태그 정보 초기화
+        page = 1;
+ 
+        url = getProjectsWithTag(page, tag);
+        fetchProject();
+    }
+
+    function clearTag(){
+        // 태그 정보 삭제
+        tagFilter = undefined;
+        // 페이지 정보 불러오기
+        page = defaultPage;
+
+        url = getProjects(page);
+        fetchProject();
     }
 
     let nameCounter = 1;
@@ -21,12 +53,12 @@
     }
 
     let page = get(pageStore);
+    let url = getProjects(page);
     let pageData = {};
     let projects = [];
     let projectsLoaded = false;
 
     function fetchProject(){
-        let url = getProjects(page);
         fetch(url).then((resp) => resp.json()).then((data) => {
             // 복사전 기존 데이터 삭제
             pageData = {};
@@ -45,16 +77,24 @@
             } else {
                 // 프로젝트 로딩이 완료됨
                 projectsLoaded  = true;
+
+                // 
+                if(pushLock === true){
+                    pushLock = false;
+                }
             }
         });
     }
 
+    // URL은 초기화 값 사용
     fetchProject();
 
     function updatePage(newPage){
         if(page != newPage){
             page = newPage;
             projectsLoaded = false;
+
+            url = getProjects(page);
             fetchProject();
         }
     }
@@ -92,7 +132,7 @@
             }
 
             // 순서가 섞였으므로 정렬
-            pages = pages.sort()
+            pages = pages.sort();
         }
 
         return pages;
@@ -130,17 +170,26 @@
     </div>
 </section>
 {:else}
-<section class="section">
+<section class="section" id="projects-section">
     <div class="container">
+        {#if tagFilter != undefined}
+        <div class="block">
+            <span class="tag is-danger is-large">
+                #{tagFilter}
+                <button class="delete" on:click={clearTag}></button>
+            </span>
+        </div>
+        {/if}
+
         <div class="content is-large">
         {#each projects as p }
-            <div class="box" on:click={()=>{moveTo(p.uuid)}}>
+            <div class="box" on:click={()=>{projectMove(p.uuid)}}>
                 <h2 class="title is-4">{p.title}</h2>
                 <p class="subtitle">{p.date}</p>
                 <div class="block buttons">
                 {#each p.tags as tag}
                     <button class="button is-warning"
-                        on:click|preventDefault={()=>{console.log(`tag:${tag}`)}}
+                        on:click|preventDefault={()=>{showTag(tag)}}
                     >
                         {tag}
                     </button>

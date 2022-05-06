@@ -40,3 +40,8 @@ export function revokeCode(code_id){
 export function getRenewToken(){
     return `${HOST}/token/renew`;
 }
+
+export function getProjectsWithTag(page, tag){
+    if(page == undefined){ page = 1; }
+    return `${HOST}/tag?page=${page}&tag=${tag}`;
+}
