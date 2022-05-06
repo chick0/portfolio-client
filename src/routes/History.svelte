@@ -75,6 +75,8 @@
                 <p>인증 코드 : <b>토큰 연장 요청</b></p>
                 {:else if code.code == "#"}
                 <p>인증 코드 : <b>취소된 요청</b></p>
+                {:else if code.code == "@"}
+                <p>인증 코드 : <b>토큰 연장으로 취소된 요청</b></p>
                 {:else}
                 <p>인증 코드 : {code.code}</p>
                 {/if}
