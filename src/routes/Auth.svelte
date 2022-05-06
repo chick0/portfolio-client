@@ -38,6 +38,16 @@
     // step 2
     let code = "";
 
+    function goNext(keyBoardDown){
+        if(keyBoardDown.charCode === 13){
+            if(step == 1){
+            doLogin();
+            } else if(step == 2) {
+                verifyCode();
+            }
+        }
+    }
+
     function doLogin(){
         if(email.length == 0 || password.length == 0){
             alert("이메일과 비밀번호를 입력해주세요.");
@@ -61,6 +71,8 @@
                 if(data.status === true){
                     step = 2;
                     password = "";
+                } else {
+                    password = "";
                 }
             });
         }
@@ -79,6 +91,7 @@
         }).then((resp) => resp.json()).then((data)=>{
             if(data.token == undefined){
                 alert(data.message);
+                code = "";
                 document.getElementById("code-input").focus();
             } else {
                 setToken(data.token);
@@ -103,7 +116,7 @@
         <div class="field">
             <label class="label" for="password-input">비밀번호</label>
             <div class="control">
-                <input id="password-input" class="input" type="password" bind:value={password}>
+                <input id="password-input" class="input" type="password" bind:value={password} on:keypress={goNext}>
             </div>
         </div>
 
@@ -123,7 +136,7 @@
         <div class="field">
             <label class="label" for="code-input">인증 코드</label>
             <div class="control">
-                <input id="code-input" class="input" type="tel" bind:value={code}>
+                <input id="code-input" class="input" type="tel" bind:value={code} on:keypress={goNext}>
             </div>
         </div>
         <div class="field">
