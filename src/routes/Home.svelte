@@ -5,20 +5,34 @@
     import { isLogined, renewToken } from '../storage.js';
     import { pageStore } from '../store.js';
 
+    // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
+    // 태그 조회에서 사용할 변수
     let tagFilter = undefined;
+    // 태그 없이 조회 할 때 페이지 값
     let defaultPage = undefined;
 
     function projectMove(uuid){
+        // 이동 잠금이 활성화 상태면 이벤트 무시하기
         if(pushLock === false){
-            pageStore.set(page);
+            if(tagFilter == undefined){
+                // 태그 필터가 없으면 그냥 page값 저장
+                pageStore.set(page);
+            } else {
+                // 태그 필터가 있다면 태그 없이 조회 할 때 사용한 페이지 값 저장
+                pageStore.set(defaultPage);
+            }
+
             push(`/project/${uuid}`);
         }
     }
 
     function showTag(tag){
+        // 이동 잠금 활성화
         pushLock = true;
+        // 태그 필터 설정하기
         tagFilter = tag;
+        // 스크롤 상단으로 이동하기
         document.getElementById("projects-section").scrollIntoView({
             behavior: 'smooth'
         });
@@ -28,6 +42,7 @@
         // 태그 정보 초기화
         page = 1;
  
+        // 프로젝트 목록을 받는 API 경로 변경
         url = getProjectsWithTag(page, tag);
         fetchProject();
     }
@@ -38,13 +53,16 @@
         // 페이지 정보 불러오기
         page = defaultPage;
 
+        // 프로젝트 목록을 받는 API 경로 변경
         url = getProjects(page);
         fetchProject();
     }
 
+    // 이름 클릭 횟수 저장소
     let nameCounter = 1;
     function nameClicked(){
         if(nameCounter == 3){
+            // 없으면 이동전 클릭했을때 여러번 반응함
             nameCounter += 1;
             push("/auth");
         } else {
@@ -52,10 +70,15 @@
         }
     }
 
+    // 저장소에서 페이지 정보 가져오기
     let page = get(pageStore);
+    // 프로젝트 목록을 받아올 API 경로 설정
     let url = getProjects(page);
+    // 페이지 정보를 저장할 변수
     let pageData = {};
+    // 프로젝트 목록을 저장할 변수
     let projects = [];
+    // 프로젝트를 불러오고 있는지 체크할때 사용할 변수
     let projectsLoaded = false;
 
     function fetchProject(){
@@ -90,11 +113,21 @@
     fetchProject();
 
     function updatePage(newPage){
+        // 기존 페이지와 새로운 페이지가 다르다면
         if(page != newPage){
+            // 페이지 정보 업데이트
             page = newPage;
+            // 프로젝트 로딩중인 상태로 변경
             projectsLoaded = false;
 
-            url = getProjects(page);
+            // 프로젝트 목록을 받아올 API 경로 업데이트
+            if(tagFilter == undefined){
+                // 태그 필터가 없다면 태그 정보 없이 가져오기
+                url = getProjects(page);
+            } else {
+                // 태그 필터가 있으면 태그 정보를 이용해 가져오기
+                url = getProjectsWithTag(page, tagFilter);
+            }
             fetchProject();
         }
     }

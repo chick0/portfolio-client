@@ -1,6 +1,8 @@
 <script>
     import { HOST } from "../url.js";
     let host = location.host;
+
+    // 선언되지 않은 변수들은 rollup의 replace플러그인으로 변경됨
 </script>
 
 <section class="section">

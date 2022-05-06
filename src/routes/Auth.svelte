@@ -39,9 +39,10 @@
     let code = "";
 
     function goNext(keyBoardDown){
+        // 엔터 키를 눌렀다면
         if(keyBoardDown.charCode === 13){
             if(step == 1){
-            doLogin();
+                doLogin();
             } else if(step == 2) {
                 verifyCode();
             }
@@ -51,10 +52,13 @@
     function doLogin(){
         if(email.length == 0 || password.length == 0){
             alert("이메일과 비밀번호를 입력해주세요.");
+            // 이메일과 비번 입력창에 빨간 테두리 생성
             document.getElementById("email-input").classList.add("is-danger");
             document.getElementById("password-input").classList.add("is-danger");
         } else {
+            // 로그인 요청 처리중 상태로 변경
             isLoginChecked = false;
+
             fetch(getLogin(), {
                 method: "POST",
                 headers: {
@@ -66,12 +70,18 @@
                 })
             }).then((resp) => resp.json()).then((data)=>{
                 alert(data.message);
+                // 로그인 요청 처리 완료 상태로 변경
                 isLoginChecked = true;
 
+                // 로그인에 성공했다면
                 if(data.status === true){
+                    // 다음단계로 이동하기
                     step = 2;
+                    // 저장된 비밀번호 삭제
                     password = "";
                 } else {
+                    // 로그인에 실패했다면
+                    // 저장된 비밀번호 삭제
                     password = "";
                 }
             });
@@ -89,12 +99,18 @@
                 code
             })
         }).then((resp) => resp.json()).then((data)=>{
+            // 발급된 토큰이 없다면
             if(data.token == undefined){
                 alert(data.message);
+                // 입력한 코드 초기화하고
                 code = "";
+                // 입력창으로 커서 이동
                 document.getElementById("code-input").focus();
             } else {
+                // 토큰이 있다면
+                // 토큰 설정하고
                 setToken(data.token);
+                // 메인화면으로 이동하기
                 push("/");
             }
         });

@@ -6,9 +6,11 @@
     function parseTimeStamp(timestamp){
         let dateObj = new Date(timestamp * 1000);
 
+        // YYYY-MM-DD
         let date = [dateObj.getFullYear(), dateObj.getMonth() + 1, dateObj.getDate()];
         date.forEach((v, i) => { if(v < 10){ date[i] = `0${v}`; }});
 
+        // HH:MM:SS
         let time = [dateObj.getHours(), dateObj.getMinutes(), dateObj.getSeconds()];
         time.forEach((v, i) => { if(v < 10){ time[i] = `0${v}`; }});
 
