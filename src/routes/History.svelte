@@ -79,7 +79,6 @@
                 <p>인증 코드 : {code.code}</p>
                 {/if}
                 <p>생성 날짜 : {parseTimeStamp(code.creation_date)}</p>
-                <p>만료 날짜 : {parseTimeStamp(code.dead_date)}</p>
                 {#if code.used == true}
                 <p><b>해당 코드는 사용된 코드입니다.</b></p>
                 {:else}
