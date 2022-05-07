@@ -224,7 +224,7 @@
                     <button class="button is-warning"
                         on:click|preventDefault={()=>{showTag(tag)}}
                     >
-                        {tag}
+                        #{tag}
                     </button>
                 {/each}
                 </div>
