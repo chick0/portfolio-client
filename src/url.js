@@ -51,7 +51,7 @@ export function getRenewToken(){
 }
 
 // 태그로 프로젝트 목록 조회
-export function getProjectsWithTag(page, tag){
+export function getProjectsWithTags(page, tags){
     if(page == undefined){ page = 1; }
-    return `${HOST}/tag?page=${page}&tag=${tag}`;
+    return `${HOST}/tag?page=${page}&tags=${tags.join(',')}`;
 }

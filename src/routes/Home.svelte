@@ -1,25 +1,36 @@
 <script>
     import { get } from "svelte/store";
     import { push } from 'svelte-spa-router';
-    import { getProjects, getProjectsWithTag } from '../url.js';
+    import { getProjects, getProjectsWithTags } from '../url.js';
     import { isLogined, renewToken } from '../storage.js';
     import { pageStore } from '../store.js';
 
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
     // 태그 조회에서 사용할 변수
-    let tagFilter = undefined;
+    let tagFilters = [];
     // 태그 없이 조회 할 때 페이지 값
     let defaultPage = undefined;
+
+    // 태그 검색 사용중인지 확인하는 함수
+    function isTagSearch(){
+        return tagFilters.length != 0;
+    }
+
+    function getURL(){
+        if(isTagSearch()){
+            return getProjectsWithTags(page, tagFilters);
+        } else {
+            return getProjects(page);
+        }
+    }
 
     function projectMove(uuid){
         // 이동 잠금이 활성화 상태면 이벤트 무시하기
         if(pushLock === false){
-            if(tagFilter == undefined){
-                // 태그 필터가 없으면 그냥 page값 저장
+            if(isTagSearch() == false){
                 pageStore.set(page);
             } else {
-                // 태그 필터가 있다면 태그 없이 조회 할 때 사용한 페이지 값 저장
                 pageStore.set(defaultPage);
             }
 
@@ -31,7 +42,17 @@
         // 이동 잠금 활성화
         pushLock = true;
         // 태그 필터 설정하기
-        tagFilter = tag;
+        if(tagFilters.length < 5){
+            if(tagFilters.indexOf(tag) == -1){
+                tagFilters.push(tag);
+                tagFilters = tagFilters;
+            } else {
+                return;
+            }
+        } else {
+            alert("최대 5개까지 선택가능합니다.");
+        }
+
         // 스크롤 상단으로 이동하기
         document.getElementById("projects-section").scrollIntoView({
             behavior: 'smooth'
@@ -42,19 +63,20 @@
         // 태그 정보 초기화
         page = 1;
  
-        // 프로젝트 목록을 받는 API 경로 변경
-        url = getProjectsWithTag(page, tag);
+        // 프로젝트 목록 업데이트
         fetchProject();
     }
 
-    function clearTag(){
-        // 태그 정보 삭제
-        tagFilter = undefined;
+    function clearTag(tag){
+        // 삭제해야하는 태그를 제외한 배열로 덮어쓰기
+        tagFilters = tagFilters.filter((x) => {
+            return x != tag;
+        })
+
         // 페이지 정보 불러오기
         page = defaultPage;
 
-        // 프로젝트 목록을 받는 API 경로 변경
-        url = getProjects(page);
+        // 프로젝트 목록 업데이트
         fetchProject();
     }
 
@@ -72,8 +94,6 @@
 
     // 저장소에서 페이지 정보 가져오기
     let page = get(pageStore);
-    // 프로젝트 목록을 받아올 API 경로 설정
-    let url = getProjects(page);
     // 페이지 정보를 저장할 변수
     let pageData = {};
     // 프로젝트 목록을 저장할 변수
@@ -82,6 +102,9 @@
     let projectsLoaded = false;
 
     function fetchProject(){
+        // API 요청을 보낼 URL 가져오기
+        let url = getURL();
+
         fetch(url).then((resp) => resp.json()).then((data) => {
             // 복사전 기존 데이터 삭제
             pageData = {};
@@ -93,9 +116,17 @@
             page = pageData.this;
             // 최대 페이지 보다 더 큰 페이지를 요청한 경우
             if(page > pageData.max){
-                alert("해당 페이지는 존제하는 페이지가 아닙니다.");
+                if(isTagSearch()){
+                    // 태그 필터 초기화
+                    tagFilters = [];
+                    alert("검색된 프로젝트가 없습니다.");
+                } else {
+                    alert("해당 페이지는 존제하는 페이지가 아닙니다.");
+                }
+
                 // 1번 페이지로 초기화
                 page = 1;
+                // 프로젝트 목록 업데이트
                 fetchProject();
             } else {
                 // 프로젝트 로딩이 완료됨
@@ -109,7 +140,7 @@
         });
     }
 
-    // URL은 초기화 값 사용
+    // 프로젝트 목록 불러오기
     fetchProject();
 
     function updatePage(newPage){
@@ -120,14 +151,7 @@
             // 프로젝트 로딩중인 상태로 변경
             projectsLoaded = false;
 
-            // 프로젝트 목록을 받아올 API 경로 업데이트
-            if(tagFilter == undefined){
-                // 태그 필터가 없다면 태그 정보 없이 가져오기
-                url = getProjects(page);
-            } else {
-                // 태그 필터가 있으면 태그 정보를 이용해 가져오기
-                url = getProjectsWithTag(page, tagFilter);
-            }
+            // 프로젝트 목록 업데이트
             fetchProject();
         }
     }
@@ -205,12 +229,14 @@
 {:else}
 <section class="section" id="projects-section">
     <div class="container">
-        {#if tagFilter != undefined}
-        <div class="block">
+        {#if tagFilters.length > 0}
+        <div class="block tags">
+            {#each tagFilters as tag}
             <span class="tag is-danger is-large">
-                #{tagFilter}
-                <button class="delete" on:click={clearTag}></button>
+                #{tag}
+                <button class="delete" on:click={() => {clearTag(tag)}}></button>
             </span>
+            {/each}
         </div>
         {/if}
 
