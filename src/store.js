@@ -12,3 +12,7 @@ export const tokenStatus = writable(null);
 // - 프로젝트 목록에서 나갈때 저장하고
 // - 프로젝트 목록에 들어올때 저장함
 export const pageStore = writable(1);
+
+// 스크롤 정보
+// - 프로젝트 목록에서 프로젝트로 이동 할 때 스크롤 위치를 저장 및 복구 할 때 사용됨
+export const scrollStore = writable(0);

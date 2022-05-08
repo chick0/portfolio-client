@@ -3,7 +3,7 @@
     import { push } from 'svelte-spa-router';
     import { getProjects, getProjectsWithTags } from '../url.js';
     import { isLogined, renewToken } from '../storage.js';
-    import { pageStore } from '../store.js';
+    import { pageStore, scrollStore } from '../store.js';
 
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
@@ -29,11 +29,18 @@
         // 이동 잠금이 활성화 상태면 이벤트 무시하기
         if(pushLock === false){
             if(isTagSearch() == false){
+                // 페이지 정보 백업하기
                 pageStore.set(page);
+                // 스크롤 정보 백업하기
+                scrollStore.set(window.scrollY);
             } else {
+                // 페이지 정보 백업하기
                 pageStore.set(defaultPage);
+                // 스크롤 정보는 백업하지 않음
+                // - 태그 조회 화면의 스크롤 정보는 백업하지 않음
             }
 
+            // 프로젝트 페이지로 이동
             push(`/project/${uuid}`);
         }
     }
@@ -112,6 +119,15 @@
             // API에서 가져온 값 복사
             Object.assign(projects, data.projects);
             Object.assign(pageData, data.page);
+            // 스크롤 복구가 필요하면 복구하기
+            if(isFirstLoad === true){
+                // 스크롤 복구가 필요없다고 상태 변경
+                isFirstLoad = false;
+                // 랜더링이후 스크롤 복구하기
+                setTimeout(() => {
+                    window.scrollTo(0, get(scrollStore));
+                }, 40);                
+            }
             // 현재 페이지 정보 업데이트
             page = pageData.this;
             // 최대 페이지 보다 더 큰 페이지를 요청한 경우
@@ -141,6 +157,7 @@
     }
 
     // 프로젝트 목록 불러오기
+    let isFirstLoad = true;
     fetchProject();
 
     function updatePage(newPage){
