@@ -4,6 +4,11 @@
     import { tokenStatus } from '../store.js';
     import { push } from 'svelte-spa-router';
 
+    // 세션 스토리지에 현재 상태를 저장할 때 사용할 키
+    const AUTH_STATUS = "mypt_auth_restore_required";
+    const AUTH_STEP = "mypt_auth_step";
+    const AUTH_EMAIL = "mypt_auth_email";
+
     // 로그인 화면 표시 여부
     let isLoginChecked = false;
 
@@ -37,6 +42,12 @@
 
     // step 2
     let code = "";
+
+    // 세션 스토리지에 저장된 상태를 복구해야하는지 검사
+    if(sessionStorage.getItem(AUTH_STATUS) === 'true'){
+        step = sessionStorage.getItem(AUTH_STEP);
+        email = sessionStorage.getItem(AUTH_EMAIL)
+    }
 
     function goNext(keyBoardDown){
         // 엔터 키를 눌렀다면
@@ -79,6 +90,11 @@
                     step = 2;
                     // 저장된 비밀번호 삭제
                     password = "";
+
+                    // 세션 스토리지를 활용해 현재 상태 저장
+                    sessionStorage.setItem(AUTH_STATUS, true);
+                    sessionStorage.setItem(AUTH_STEP  , 2);
+                    sessionStorage.setItem(AUTH_EMAIL , email);
                 } else {
                     // 로그인에 실패했다면
                     // 저장된 비밀번호 삭제
@@ -107,9 +123,10 @@
                 // 입력창으로 커서 이동
                 document.getElementById("code-input").focus();
             } else {
-                // 토큰이 있다면
-                // 토큰 설정하고
+                // 토큰이 있다면, 토큰 설정하고
                 setToken(data.token);
+                // 세션 스토리지에 저장된 상태 초기화
+                sessionStorage.clear();
                 // 메인화면으로 이동하기
                 push("/");
             }
