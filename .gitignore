@@ -6,4 +6,3 @@
 # firebase deploy!
 .firebase/
 .firebaserc
-firebase.json
