@@ -72,22 +72,26 @@
         {#each history as code}
         <div class="box" on:click={()=>{askRevokeCode(code.id)}}>
             <div class="content is-medium">
-                <p>요청 IP : {code.ip}</p>
-                {#if code.code == "-"}
-                <p>인증 코드 : <b>토큰 연장 요청</b></p>
-                {:else if code.code == "#"}
-                <p>인증 코드 : <b>취소된 요청</b></p>
-                {:else if code.code == "@"}
-                <p>인증 코드 : <b>토큰 연장으로 취소된 요청</b></p>
-                {:else}
-                <p>인증 코드 : {code.code}</p>
-                {/if}
                 <p>생성 날짜 : {parseTimeStamp(code.creation_date)}</p>
-                {#if code.used == true}
-                <p><b>해당 코드는 사용된 코드입니다.</b></p>
-                {:else}
-                <p>해당 코드는 사용되지 않은 코드입니다.</p>
-                {/if}
+                <p>요청 IP : {code.ip}</p>
+            {#if code.code == "-"}
+                <p>인증 코드 : <b class="has-text-danger">토큰 연장 요청</b></p>
+            {:else if code.code == "#"}
+                <p>인증 코드 : <b class="has-text-danger">취소된 요청</b></p>
+            {:else if code.code == "@"}
+                <p>인증 코드 : <b class="has-text-danger">토큰 연장으로 취소된 요청</b></p>
+            {:else}
+                <p>인증 코드 : {code.code}</p>
+            {/if}
+        {#if code.used == true}
+                <p><b class="has-text-info">해당 코드는 사용된 코드입니다.</b></p>
+        {:else}
+            {#if code.expired == true}
+                <p><b class="has-text-danger">해당 코드는 만료된 코드입니다.</b></p>
+            {:else}
+                <p><b class="has-text-success">해당 코드는 사용 가능한 코드입니다.</b></p>
+            {/if}
+        {/if}
             </div>
         </div>
         {/each}
