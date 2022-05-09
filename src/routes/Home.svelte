@@ -126,6 +126,7 @@
                 // 랜더링이후 스크롤 복구하기
                 setTimeout(() => {
                     window.scrollTo(0, get(scrollStore));
+                    scrollStore.set(0);
                 }, 40);                
             }
             // 현재 페이지 정보 업데이트
