@@ -36,8 +36,7 @@
             } else {
                 // 페이지 정보 백업하기
                 pageStore.set(defaultPage);
-                // 스크롤 정보는 백업하지 않음
-                // - 태그 조회 화면의 스크롤 정보는 백업하지 않음
+                // 스크롤 정보는 이미 백업되었거나 백업되지 않음
             }
 
             // 프로젝트 페이지로 이동
@@ -60,15 +59,19 @@
             alert("최대 5개까지 선택가능합니다.");
         }
 
+        if(tagFilters.length === 1){
+            // 태그 없는 상태의 페이지 정보 다른 변수 저장
+            defaultPage = page;
+            // 태그 정보 초기화
+            page = 1;
+            // 스크롤 정보 백업
+            scrollStore.set(window.scrollY);
+        }
+
         // 스크롤 상단으로 이동하기
         document.getElementById("projects-section").scrollIntoView({
             behavior: 'smooth'
         });
-
-        // 태그 없는 상태의 페이지 정보 다른 변수 저장
-        defaultPage = page;
-        // 태그 정보 초기화
-        page = 1;
  
         // 프로젝트 목록 업데이트
         fetchProject();
@@ -80,8 +83,13 @@
             return x != tag;
         })
 
-        // 페이지 정보 불러오기
-        page = defaultPage;
+        if(!isTagSearch()){
+            // 페이지 정보 불러오기
+            page = defaultPage;
+
+            // 스크롤 복구하도록 값 변경
+            isFirstLoad = true;
+        }
 
         // 프로젝트 목록 업데이트
         fetchProject();
