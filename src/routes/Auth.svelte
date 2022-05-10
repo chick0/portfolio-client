@@ -6,8 +6,9 @@
 
     // 세션 스토리지에 현재 상태를 저장할 때 사용할 키
     const AUTH_STATUS = "mypt_auth_restore_required";
-    const AUTH_STEP = "mypt_auth_step";
-    const AUTH_EMAIL = "mypt_auth_email";
+    const AUTH_STEP   = "mypt_auth_step";
+    const AUTH_EMAIL  = "mypt_auth_email";
+    const AUTH_CODE   = "mypt_auth_code_id";
 
     // 로그인 화면 표시 여부
     let isLoginChecked = false;
@@ -42,11 +43,13 @@
 
     // step 2
     let code = "";
+    let code_id = 0;
 
     // 세션 스토리지에 저장된 상태를 복구해야하는지 검사
     if(sessionStorage.getItem(AUTH_STATUS) === 'true'){
-        step = sessionStorage.getItem(AUTH_STEP);
-        email = sessionStorage.getItem(AUTH_EMAIL)
+        step    = sessionStorage.getItem(AUTH_STEP);
+        email   = sessionStorage.getItem(AUTH_EMAIL);
+        code_id = sessionStorage.getItem(AUTH_CODE);
     }
 
     function goNext(keyBoardDown){
@@ -90,11 +93,14 @@
                     step = 2;
                     // 저장된 비밀번호 삭제
                     password = "";
+                    // 인증 코드 아이디
+                    code_id = data.code_id;
 
                     // 세션 스토리지를 활용해 현재 상태 저장
                     sessionStorage.setItem(AUTH_STATUS, true);
-                    sessionStorage.setItem(AUTH_STEP  , 2);
-                    sessionStorage.setItem(AUTH_EMAIL , email);
+                    sessionStorage.setItem(AUTH_STEP,   2);
+                    sessionStorage.setItem(AUTH_EMAIL,  email);
+                    sessionStorage.setItem(AUTH_CODE,   code_id)
                 } else {
                     // 로그인에 실패했다면
                     // 저장된 비밀번호 삭제
@@ -112,7 +118,8 @@
             },
             body: JSON.stringify({
                 email,
-                code
+                code,
+                code_id,
             })
         }).then((resp) => resp.json()).then((data)=>{
             // 발급된 토큰이 없다면
