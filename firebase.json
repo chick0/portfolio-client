@@ -1,10 +1,22 @@
 {
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+    "hosting": {
+        "public": "public",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "redirects": [
+            {
+                "source": "/build",
+                "destination": "/#/build",
+                "type": 301
+            },
+            {
+                "source": "/project/:projectId",
+                "destination": "/#/project/:projectId",
+                "type": 301
+            }
+        ]
+    }
 }
