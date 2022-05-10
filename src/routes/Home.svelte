@@ -69,8 +69,10 @@
         }
 
         // 스크롤 상단으로 이동하기
-        document.getElementById("projects-section").scrollIntoView({
-            behavior: 'smooth'
+        document.getElementById("cursor-postion").scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
         });
  
         // 프로젝트 목록 업데이트
@@ -245,6 +247,8 @@
     </div>
 </section>
 
+<div id="cursor-postion"></div>
+
 {#if projectsLoaded == false}
 <section class="section">
     <div class="container">
@@ -253,7 +257,7 @@
     </div>
 </section>
 {:else}
-<section class="section" id="projects-section">
+<section class="section">
     <div class="container">
         {#if tagFilters.length > 0}
         <div class="block tags">
