@@ -26,8 +26,8 @@ export function getVerify(){
 }
 
 // 인증 토큰 검증
-export function getTokenVerify(){
-    return `${HOST}/token/verify`;
+export function getCheckToken(){
+    return `${HOST}/v2/auth/check/token`;
 }
 
 // 로그인 기록 조회
@@ -47,7 +47,7 @@ export function revokeCode(code_id){
 
 // 인증 토큰 갱신
 export function getRenewToken(){
-    return `${HOST}/token/renew`;
+    return `${HOST}/v2/auth/login/renew`;
 }
 
 // 태그로 프로젝트 목록 조회

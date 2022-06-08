@@ -1,4 +1,4 @@
-import { getTokenVerify, getRenewToken } from './url.js';
+import { getCheckToken, getRenewToken } from './url.js';
 import { tokenStatus } from './store.js';
 
 // 인증 토큰이 저장될 키 값
@@ -42,31 +42,25 @@ export function checkToken(){
         return false;
     }
 
-    fetch(getTokenVerify(), {
+    fetch(getCheckToken(), {
         method: "GET",
         headers: {
             "Authorization": token,
         }
     }).then((resp) => resp.json()).then((data) => {
-        // 토큰 검증 결과(상태)
-        let status = data.status;
-        // 검증 결과가 비어있다면
-        if(status == undefined){
-            // 인증 토큰 삭제하기
-            clearToken();
-            // 오류 메시지 표시하기
-            alert(data.message);
-            // 토큰 상태 사용 불가능함으로 설정
-            tokenStatus.set(false);
-        } else {
-            // 토큰 상태 사용 가능함으로 설정
-            // - api의 결과 값을 따르는데 api는 true또는 undefined를 반환함
-            tokenStatus.set(data.status);
+        if(data.status === true){
+            tokenStatus.set(true);
+
             // 토큰 갱신이 필요하다면
-            if(data.renew_required === true){
+            if(data.ttl <= 1800){
                 // 토큰 갱신하기
                 renewToken();
             }
+        } else {
+            alert("만료된 세션입니다.");
+            clearToken();
+            // 토큰 상태 = 사용 불가
+            tokenStatus.set(false);            
         }
     });
 }
@@ -77,19 +71,14 @@ export function renewToken(){
             'Authorization': getToken()
         }
     }).then((resp) => resp.json()).then((data) => {
-        // API에서 새로운 토큰 가져오기
-        let newToken = data.token;
-        // 가져온 토큰이 비어있다면
-        if(newToken == undefined){
+        // 생성된 토큰이 없다면 = 인증 세션 만료임
+        if(data.token == undefined){
             // 인증 토큰 삭제하기
+            alert(data.detail.alert);
             clearToken();
-            // 오류 메시지 표시하기
-            alert(data.message);
         } else {
-            // 성공 메시지 표시하기
-            alert("인증 토큰이 연장되었습니다.");
-            // 연장된 인증 토큰 저장하기
-            setToken(newToken);
+            // 연장된 토큰 저장하기
+            setToken(data.token);
         }
     });
 }

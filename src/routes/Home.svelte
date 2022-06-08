@@ -2,7 +2,7 @@
     import { get } from "svelte/store";
     import { push } from 'svelte-spa-router';
     import { getProjects, getProjectsWithTags } from '../url.js';
-    import { isLogined, renewToken } from '../storage.js';
+    import { isLogined } from '../storage.js';
     import { pageStore, scrollStore } from '../store.js';
 
     // 프로젝트 화면으로 이동하는 것 방지
@@ -241,7 +241,6 @@
         <div class="box buttons">
             <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트 등록</button>
             <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록 조회하기</button>
-            <button class="button is-warning is-light" on:click={renewToken}>로그인 연장하기</button>
         </div>
     {/if}
     </div>

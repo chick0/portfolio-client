@@ -17,7 +17,16 @@
     if(isLogined() === true){
         tokenStatus.set("checkRequired");
         tokenStatus.subscribe((v) => {
-            console.log(v, v == "checkRequired");
+            if(v == "checkRequired"){
+                // 인증 토큰 검증하기
+                checkToken();
+            } else if(v === true){
+                // 인증 토큰이 만료되지 않음
+                push("/");
+            } else if(v === false){
+                // 인증 토큰 만료됨
+                isLoginChecked = true;
+            }
         });
     } else {
         // 로그인 상태가 아님 로그인 화면 표시하기
