@@ -16,7 +16,7 @@ export function setToken(token){
 
 export function getToken(){
     // 로컬스토리지에서 인증 토큰 불러오기
-    return localStorage.getItem(TOKEN_KEY);
+    return "Bearer " + localStorage.getItem(TOKEN_KEY);
 }
 
 export function isLogined(){
@@ -45,7 +45,7 @@ export function checkToken(){
     fetch(getTokenVerify(), {
         method: "GET",
         headers: {
-            "x-auth": token,
+            "Authorization": token,
         }
     }).then((resp) => resp.json()).then((data) => {
         // 토큰 검증 결과(상태)
@@ -74,7 +74,7 @@ export function checkToken(){
 export function renewToken(){
     fetch(getRenewToken(), {
         headers: {
-            'x-auth': getToken()
+            'Authorization': getToken()
         }
     }).then((resp) => resp.json()).then((data) => {
         // API에서 새로운 토큰 가져오기

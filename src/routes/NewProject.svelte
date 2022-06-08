@@ -28,7 +28,7 @@
         fetch(url, {
             method: "POST",
             headers: {
-                'x-auth': getToken(),
+                'Authorization': getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(project)

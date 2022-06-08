@@ -37,7 +37,7 @@
                 fetch(url, {
                     method: "DELETE",
                     headers: {
-                        'x-auth': getToken()
+                        'Authorization': getToken()
                     }
                 }).then((resp) => resp.json()).then((data) => {
                     alert(data.message);
@@ -61,7 +61,7 @@
 <section class="section">
     <div class="container">
         <h1 class="title is-1">{project.title}</h1>
-        <p class="subtitle">{project.date}</p>
+        <p class="subtitle">{project.date.pretty}</p>
 
         <div class="block">
         {#if project.github.length != 0}
@@ -74,7 +74,7 @@
 
         {#if isLogined() == true}
         <div class="box">
-            <button class="button is-warning" on:click={()=>{push(`/project/${params.uuid}/edit`)}}>프로젝트 수정</button>
+            <button class="button is-warning" on:click={()=>{push(`/project/${project.uuid}/edit`)}}>프로젝트 수정</button>
             <button class="button is-danger" on:click={projectDelete}>프로젝트 삭제</button>
         </div>
         {/if}
@@ -84,21 +84,21 @@
 <section class="section">
     <div class="container">
         <h2 class="title is-2">기획의도</h2>
-        <div class="content is-medium">{@html parse(project.content.a)}</div>
+        <div class="content is-medium">{@html parse(project.a)}</div>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
         <h2 class="title is-2">특징</h2>
-        <div class="content is-medium">{@html parse(project.content.b)}</div>
+        <div class="content is-medium">{@html parse(project.b)}</div>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
         <h2 class="title is-2">느낀점</h2>
-        <div class="content is-medium">{@html parse(project.content.c)}</div>
+        <div class="content is-medium">{@html parse(project.c)}</div>
     </div>
 </section>
 

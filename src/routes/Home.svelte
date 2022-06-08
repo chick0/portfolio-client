@@ -127,7 +127,7 @@
             pageData = {};
             projects = [];
             // API에서 가져온 값 복사
-            Object.assign(projects, data.projects);
+            Object.assign(projects, data.projectList);
             Object.assign(pageData, data.page);
             // 스크롤 복구가 필요하면 복구하기
             if(isFirstLoad === true){

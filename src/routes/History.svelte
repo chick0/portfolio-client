@@ -24,7 +24,7 @@
         fetch(getHistory(), {
             method: "GET",
             headers: {
-                "x-auth": getToken(),
+                "Authorization": getToken(),
             }
         }).then((resp) => resp.json()).then((data) => {
             if(data.history != undefined){
@@ -44,7 +44,7 @@
             fetch(revokeCode(code_id), {
                 method: "DELETE",
                 headers: {
-                    'x-auth': getToken()
+                    'Authorization': getToken()
                 }
             }).then((resp) => resp.json()).then((data) => {
                 if(data.status != undefined && data.status == true){

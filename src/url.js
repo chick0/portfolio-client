@@ -1,9 +1,9 @@
-export const HOST = isProduction === true ? "https://mypt.ch1ck.xyz" : "http://localhost:5000";
+export const HOST = isProduction === true ? "https://mypt.ch1ck.xyz" : "http://localhost:19564";
 
 // 프로젝트 정보 조회
 export function getProject(uuid) {
     if(uuid.length == 36){
-        return `${HOST}/project/${uuid}`
+        return `${HOST}/v2/projects/${uuid}`
     } else {
         return false;
     }
@@ -12,17 +12,17 @@ export function getProject(uuid) {
 // 프로젝트 목록 조회
 export function getProjects(page){
     if(page == undefined){ page = 1; }
-    return `${HOST}/projects?page=${page}`;
+    return `${HOST}/v2/projects/list/page?page=${page}`;
 }
 
 // 로그인 요청 처리
 export function getLogin(){
-    return `${HOST}/auth`;
+    return `${HOST}/v2/auth/login`;
 }
 
 // 이메일 인증 코드 검증
 export function getVerify(){
-    return `${HOST}/auth/verify`;
+    return `${HOST}/v2/auth/login/code`;
 }
 
 // 인증 토큰 검증
@@ -53,5 +53,5 @@ export function getRenewToken(){
 // 태그로 프로젝트 목록 조회
 export function getProjectsWithTags(page, tags){
     if(page == undefined){ page = 1; }
-    return `${HOST}/tag?page=${page}&tags=${tags.join(',')}`;
+    return `${HOST}/v2/projects/list/tags?page=${page}&tags=${tags.join(',')}`;
 }
