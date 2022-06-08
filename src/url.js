@@ -37,7 +37,7 @@ export function getHistory(){
 
 // 프로젝트 생성
 export function createProject(){
-    return `${HOST}/project`;
+    return `${HOST}/v2/projects/create`;
 }
 
 // 인증 세션 취소

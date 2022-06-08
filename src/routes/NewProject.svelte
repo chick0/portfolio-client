@@ -13,15 +13,13 @@
     let url = createProject();
     let project = {
         title: "[작성중] 제목 없는 프로젝트",
-        dt: `${year}-05-21`,
-        tags: '작성중',
-        web: 'https://',
+        date: `${year}-05-21`,
+        tag: '작성중',
+        web: 'https://ch1ck.xyz',
         github: 'https://github.com/',
-        content: {
-            a: '기획의도 작성중',
-            b: '특징 작성중',
-            c: '느낀점 작성중',
-        }
+        a: '기획의도 작성중',
+        b: '특징 작성중',
+        c: '느낀점 작성중',
     };
 
     function projectSave(){
@@ -33,8 +31,8 @@
             },
             body: JSON.stringify(project)
         }).then((resp) => resp.json()).then((data) => {
-            if(data.status == undefined){
-                alert(data.message);
+            if(data.uuid == undefined){
+                alert(data.detail.alert);
             } else {
                 push(`/project/${data.uuid}`);
             }
@@ -60,7 +58,7 @@
             <div class="field">
                 <label class="label" for="dt">날짜</label>
                 <div class="control">
-                    <input id="dt" class="input" type="date" bind:value="{project.dt}">
+                    <input id="dt" class="input" type="date" bind:value="{project.date}">
                 </div>
             </div>
         </div>
@@ -87,7 +85,7 @@
             <div class="field">
                 <label class="label" for="tags">태그</label>
                 <div class="control">
-                    <input id="tags" class="input" type="url" bind:value="{project.tags}">
+                    <input id="tags" class="input" type="url" bind:value="{project.tag}">
                 </div>
             </div>
         </div>
@@ -98,7 +96,7 @@
     <div class="container">
         <div class="box">
             <h2 class="title is-2">기획의도</h2>
-            <textarea class="textarea is-medium" rows="12" bind:value={project.content.a}></textarea>    
+            <textarea class="textarea is-medium" rows="12" bind:value={project.a}></textarea>    
         </div>
     </div>
 </section>
@@ -107,7 +105,7 @@
     <div class="container">
         <div class="box">
             <h2 class="title is-2">특징</h2>
-            <textarea class="textarea is-medium" rows="12" bind:value={project.content.b}></textarea>    
+            <textarea class="textarea is-medium" rows="12" bind:value={project.b}></textarea>    
         </div>
     </div>
 </section>
@@ -116,7 +114,7 @@
     <div class="container">
         <div class="box">
             <h2 class="title is-2">느낀점</h2>
-            <textarea class="textarea is-medium" rows="12" bind:value={project.content.c}></textarea>    
+            <textarea class="textarea is-medium" rows="12" bind:value={project.c}></textarea>    
         </div>
     </div>
 </section>
