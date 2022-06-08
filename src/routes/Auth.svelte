@@ -5,10 +5,10 @@
     import { push } from 'svelte-spa-router';
 
     // 세션 스토리지에 현재 상태를 저장할 때 사용할 키
-    const AUTH_STATUS = "mypt_auth_restore_required";
-    const AUTH_STEP   = "mypt_auth_step";
-    const AUTH_EMAIL  = "mypt_auth_email";
-    const AUTH_CODE   = "mypt_auth_code_id";
+    const AUTH_STATUS  = "mypt_auth_restore_required";
+    const AUTH_STEP    = "mypt_auth_step";
+    const AUTH_USER    = "mypt_auth_user_id";
+    const AUTH_REQUEST = "mypt_auth_request_id";
 
     // 로그인 화면 표시 여부
     let isLoginChecked = false;
@@ -33,8 +33,7 @@
         isLoginChecked = true;
     }
 
-    // 1: email & password
-    // 2: email & code
+    // login step
     let step = 1;
 
     // step 1
@@ -42,14 +41,15 @@
     let password = "";
 
     // step 2
+    let user_id = 0;
+    let request_id = 0;
     let code = "";
-    let code_id = 0;
 
     // 세션 스토리지에 저장된 상태를 복구해야하는지 검사
     if(sessionStorage.getItem(AUTH_STATUS) === 'true'){
-        step    = sessionStorage.getItem(AUTH_STEP);
-        email   = sessionStorage.getItem(AUTH_EMAIL);
-        code_id = sessionStorage.getItem(AUTH_CODE);
+        step       = sessionStorage.getItem(AUTH_STEP);
+        user_id    = sessionStorage.getItem(AUTH_USER);
+        request_id = sessionStorage.getItem(AUTH_REQUEST);
     }
 
     function goNext(keyBoardDown){
@@ -83,28 +83,26 @@
                     password
                 })
             }).then((resp) => resp.json()).then((data)=>{
-                alert(data.message);
                 // 로그인 요청 처리 완료 상태로 변경
                 isLoginChecked = true;
+                // 입력한 비밀번호 초기화
+                password = "";
 
                 // 로그인에 성공했다면
-                if(data.status === true){
+                if(data.user_id != undefined){
                     // 다음단계로 이동하기
                     step = 2;
-                    // 저장된 비밀번호 삭제
-                    password = "";
-                    // 인증 코드 아이디
-                    code_id = data.code_id;
+
+                    user_id = data.user_id;
+                    request_id = data.request_id;
 
                     // 세션 스토리지를 활용해 현재 상태 저장
-                    sessionStorage.setItem(AUTH_STATUS, true);
-                    sessionStorage.setItem(AUTH_STEP,   2);
-                    sessionStorage.setItem(AUTH_EMAIL,  email);
-                    sessionStorage.setItem(AUTH_CODE,   code_id)
+                    sessionStorage.setItem(AUTH_STATUS,  'true');
+                    sessionStorage.setItem(AUTH_STEP,    2);
+                    sessionStorage.setItem(AUTH_USER,    user_id);
+                    sessionStorage.setItem(AUTH_REQUEST, request_id)
                 } else {
-                    // 로그인에 실패했다면
-                    // 저장된 비밀번호 삭제
-                    password = "";
+                    alert(data.detail.alert);
                 }
             });
         }
@@ -117,14 +115,14 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email,
+                user_id,
+                request_id,
                 code,
-                code_id,
             })
         }).then((resp) => resp.json()).then((data)=>{
             // 발급된 토큰이 없다면
             if(data.token == undefined){
-                alert(data.message);
+                alert(data.detail.alert);
                 // 입력한 코드 초기화하고
                 code = "";
                 // 입력창으로 커서 이동
