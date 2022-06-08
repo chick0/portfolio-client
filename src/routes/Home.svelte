@@ -239,8 +239,8 @@
     {/if}
     {#if isLogined() == true}
         <div class="box buttons">
-            <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트 등록</button>
-            <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록 조회하기</button>
+            <button class="button is-primary" on:click={()=>{push("/new-project")}}>새로운 프로젝트</button>
+            <button class="button is-info" on:click={()=>{push("/auth/history")}}>로그인 기록</button>
         </div>
     {/if}
     </div>

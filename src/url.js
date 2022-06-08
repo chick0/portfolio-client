@@ -32,7 +32,7 @@ export function getCheckToken(){
 
 // 로그인 기록 조회
 export function getHistory(){
-    return `${HOST}/token/history`;
+    return `${HOST}/v2/auth/history/login`;
 }
 
 // 프로젝트 생성
@@ -40,9 +40,12 @@ export function createProject(){
     return `${HOST}/project`;
 }
 
-// 인증 코드 취소
-export function revokeCode(code_id){
-    return `${HOST}/token/code/${code_id}`;
+// 인증 세션 취소
+export function logout(){
+    return `${HOST}/v2/auth/logout`;
+}
+export function revokeSessionWithId(session_id){
+    return `${HOST}/v2/auth/logout?session_id=${session_id}`;
 }
 
 // 인증 토큰 갱신
