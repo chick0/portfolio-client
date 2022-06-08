@@ -40,9 +40,11 @@
                         'Authorization': getToken()
                     }
                 }).then((resp) => resp.json()).then((data) => {
-                    alert(data.message);
                     if(data.status == true){
+                        alert("프로젝트가 삭제되었습니다.");
                         push("/");
+                    } else {
+                        alert("프로젝트 삭제에 실패했습니다.");
                     }
 
                     projectLoaded = true;
