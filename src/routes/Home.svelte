@@ -258,10 +258,13 @@
         </div>
     {/if}
     {#if isLogined() == true}
-        <div class="box buttons">
-            <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트</button>
-            <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록</button>
-            <button class="button is-light" on:click={()=>{push("/auth/logout")}}>로그아웃</button>
+        <div class="box">
+            <h5 class="title is-5">Hello, World!</h5>
+            <div class="buttons">
+                <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트</button>
+                <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록</button>
+                <button class="button is-light" on:click={()=>{push("/auth/logout")}}>로그아웃</button>
+            </div>
         </div>
     {/if}
     </div>

@@ -91,12 +91,15 @@
         {/each}
         </div>    
 
-        {#if isLogined() == true}
+    {#if isLogined() == true}
         <div class="box">
-            <button class="button is-warning" on:click={()=>{push(`/project/${project.uuid}/edit`)}}>프로젝트 수정</button>
-            <button class="button is-danger" on:click={projectDelete}>프로젝트 삭제</button>
+            <h5 class="title is-5">프로젝트 관리</h5>
+            <div class="buttons">
+                <button class="button is-danger is-light" on:click={()=>{push(`/project/${project.uuid}/edit`)}}>프로젝트 수정</button>
+                <button class="button is-danger" on:click={projectDelete}>프로젝트 삭제</button>    
+            </div>
         </div>
-        {/if}
+    {/if}
     </div>
 </section>
 
