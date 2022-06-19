@@ -3,6 +3,7 @@
     import { Renderer, setOptions, parse } from "marked";
     import { getProject } from '../url.js';
     import { isLogined, getToken } from '../storage.js';
+    import { tagStore } from '../store.js';
     export let params = {};
 
     let projectLoaded = false;
@@ -57,6 +58,11 @@
 
         alert("취소되었습니다.");
     }
+
+    function showTag(tag){
+        tagStore.set(tag);
+        push("/");
+    }
 </script>
 
 {#if projectLoaded == true}
@@ -73,6 +79,17 @@
             <a class="button is-link" href="{project.web}" target="_blank">Web</a>
         {/if}
         </div>
+
+        <div class="block buttons">
+        {#each project.tags as tag}
+            <button
+                class="button is-warning"
+                on:click|preventDefault={()=>{showTag(tag)}}
+            >
+                #{tag}
+            </button>
+        {/each}
+        </div>    
 
         {#if isLogined() == true}
         <div class="box">

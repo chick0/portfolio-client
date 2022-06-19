@@ -3,7 +3,7 @@
     import { push } from 'svelte-spa-router';
     import { getProjects, getProjectsWithTags } from '../url.js';
     import { isLogined } from '../storage.js';
-    import { pageStore, scrollStore } from '../store.js';
+    import { pageStore, scrollStore, tagStore } from '../store.js';
 
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
@@ -47,7 +47,7 @@
     function showTag(tag){
         // 이동 잠금 활성화
         pushLock = true;
-        // 태그 필터 설정하기
+
         if(tagFilters.length < 5){
             if(tagFilters.indexOf(tag) == -1){
                 tagFilters.push(tag);
@@ -60,16 +60,16 @@
         }
 
         if(tagFilters.length === 1){
-            // 태그 없는 상태의 페이지 정보 다른 변수 저장
+            // 태그 없는 상태의 페이지 정보를 다른 변수에 저장
             defaultPage = page;
-            // 태그 정보 초기화
+            // 페이지 정보 초기화
             page = 1;
             // 스크롤 정보 백업
             scrollStore.set(window.scrollY);
         }
 
         // 스크롤 상단으로 이동하기
-        document.getElementById("cursor-postion").scrollIntoView({
+        document.getElementById("cursor-postion")?.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
             inline: 'nearest'
@@ -169,7 +169,25 @@
 
     // 프로젝트 목록 불러오기
     let isFirstLoad = true;
-    fetchProject();
+
+    if(get(tagStore) !== null){
+        isFirstLoad = false;
+        projectsLoaded = true;
+
+        let scroll = get(scrollStore);
+        const unsubscribe = scrollStore.subscribe((v) => {
+            if(v == 0){
+                scrollStore.set(scroll);
+                unsubscribe();
+            }
+        });
+
+        setTimeout(() => {
+            showTag(get(tagStore));
+        }, 50);
+    } else {
+        fetchProject();
+    }
 
     function updatePage(newPage){
         // 기존 페이지와 새로운 페이지가 다르다면

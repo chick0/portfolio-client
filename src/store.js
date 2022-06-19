@@ -16,3 +16,7 @@ export const pageStore = writable(1);
 // 스크롤 정보
 // - 프로젝트 목록에서 프로젝트로 이동 할 때 스크롤 위치를 저장 및 복구 할 때 사용됨
 export const scrollStore = writable(0);
+
+// 태그 필터
+// - 프로젝트 목록 화면에서 조회할 태그 목록
+export const tagStore = writable(null);
