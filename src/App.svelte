@@ -24,6 +24,9 @@
             <div class="column">
                 <a href="https://github.com/chick0">Github</a>
             </div>
+            <div class="column">
+                <a href="mailto:chick_0@ch1ck.xyz">Email</a>
+            </div>
         </div>
     </div>
 </section>
