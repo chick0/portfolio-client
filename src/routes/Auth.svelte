@@ -193,9 +193,3 @@
     </div>
 </section>
 {/if}
-
-<section class="section">
-    <div class="container">
-        <button class="button is-link is-large is-fullwidth" on:click={()=>{push("/")}}>프로젝트 목록으로 돌아가기</button>
-    </div>
-</section>
