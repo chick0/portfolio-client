@@ -144,6 +144,7 @@
 <section class="section">
     <div class="container">
         <h1 class="title is-1">로그인</h1>
+        <p class="subtitle has-text-link is-clickable" on:click={() => {push("/")}}>프로젝트 목록으로 돌아가기</p>
 
         <div class="field">
             <label class="label" for="email-input">이메일</label>
