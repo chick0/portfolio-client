@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-	<meta charset="utf-8">
-    <meta name="robots" content="noindex">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>404</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="robots" content="noindex">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>404</title>
 
-	<link rel="icon" type="image/png" href="/favicon.png">
-	<link rel="stylesheet" href="/bulma.min.css">
-</head>
-<body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title is-1">404</h1>
-            <p class="subtitle">해당 페이지를 찾지 못함</p>
-            <div class="block">
-                <p>잠시후 프로젝트 목록 페이지로 이동합니다.</p>
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <link rel="stylesheet" href="/bulma.min.css">
+    </head>
+    <body>
+        <section class="section">
+            <div class="container">
+                <h1 class="title is-1">404</h1>
+                <p class="subtitle">해당 페이지를 찾지 못함</p>
+                <div class="content">
+                    <p>잠시후 프로젝트 목록 페이지로 이동합니다.</p>
+                    <p>이동되지 않는다면 <a href="/">저</a>를 클릭해주세요.</p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <script>
-        let newPath = "/";
-        if(location.pathname.startsWith("/project")){
-            newPath = "/#" + location.pathname;
-        }
-
-        setTimeout(function(){ location.replace(newPath); }, 950);
-    </script>
-</body>
+        <script>
+            setTimeout(() => { location.replace("/"); }, 950);
+        </script>
+    </body>
 </html>

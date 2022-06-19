@@ -1,30 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>chick_0</title>
-
-	<link rel="icon" type="image/png" href="/favicon.png">
-	<link rel="stylesheet" href="/bulma.min.css">
-
-    <script defer src="/build/bundle.js"></script>
-    <style>
-        /* set background color for footer */
-        html{background-color:#FAFAFA;}
-        body{background-color:#FFFFFF;}
-    </style>
-</head>
-<body>
-    <noscript>
-        <div class="section container">
-            <h1 class="title is-1">오류!</h1>
-            <p class="subtitle">이 사이트를 사용하려면 자바스크립트를 활성화해야 합니다.</p>
-        </div>
-        <div class="section container">
-            <a class="button is-dark is-large"  href="https://github.com/chick0">Github</a>
-            <a class="button is-link is-light is-large" href="mailto:chick_0@ch1ck.xyz">Email</a>
-        </div>
-    </noscript>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>chick_0</title>
+        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+        <meta name="keywords" content="chick_0, ch1ck_0, chick0">
+        <meta name="description" content="제 프로젝트를 소개합니다.">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="chick_0">
+        <meta property="og:description" content="업로드한 파일은 45분뒤에 삭제됩니다.">
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <link rel="stylesheet" href="/bulma.min.css">
+        <style>/*  set background color for footer */
+            html{background-color:#FAFAFA;}
+            body{background-color:#FFFFFF;}
+        </style>
+    </head>
+    <body>
+        <script defer src="/build/bundle.js"></script>
+        <script>// remove index.html in path            
+            if(location.pathname.indexOf("index.html") == 1) location.replace("/" + location.hash);
+        </script>
+    </body>
 </html>
