@@ -65,7 +65,7 @@
                 <p><b class="has-text-success">* 만료되지 않은 세션</b></p>
             {/if}
             {#if ctx.same == true}
-                <p><b class="has-text-danger">* 현재 사용중인 세션</b></p>
+                <blockquote>현재 사용중인 세션</blockquote>
             {/if}
             </div>
         </div>
