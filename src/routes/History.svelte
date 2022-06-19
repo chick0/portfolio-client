@@ -80,10 +80,14 @@
     </div>
 </section>
 {/if}
-<section class="section">
-    <div class="container">
-        <button class="button is-link is-large is-fullwidth" on:click={()=>{push("/")}}>
-            프로젝트 목록으로 이동
-        </button>
-    </div>
-</section>
+
+<!-- *sticky* -->
+<button
+    class="button is-primary is-medium is-fullwidth container"
+    style="position: -webkit-sticky; position: sticky; bottom: 10px;"
+    on:click={()=>{push("/")}}
+>
+    프로젝트 목록으로 이동
+</button>
+
+<section class="section"></section>
