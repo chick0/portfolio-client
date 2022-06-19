@@ -246,7 +246,8 @@
 <section class="section">
     <div class="container">
         <h1 class="title is-1" on:click={nameClicked}>{config.name}</h1>
-        <div class="block">
+        <p class="subtitle">제 프로젝트를 소개합니다.</p>
+        <div class="buttons">
             <a class="button is-dark is-medium" href="{config.github}" target="_blank">Github</a>
             <a class="button is-link is-medium" href="mailto:{config.email}" target="_blank">Email</a>
         </div>
