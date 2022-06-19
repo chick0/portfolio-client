@@ -1,7 +1,8 @@
 <script>
     import Router from 'svelte-spa-router';
     import { location } from 'svelte-spa-router';
-    import routes from './routes';
+    import routes from './routes.js';
+    import { config } from "./config.js";
 
     // 라우터 경로 업데이트 감지
     location.subscribe((path) => {
@@ -9,8 +10,8 @@
         if(path.startsWith("/project")){
             // 프로젝트 컴퍼넌트가 프로젝트 제목으로 문서 제목 업데이트
         } else {
-            // 아니면 'chick_0'으로 문서 제목 초기화
-            document.title = 'chick_0';
+            // 아니면 이름으로 문서 제목 초기화
+            document.title = config.name;
         }
     });
 </script>
@@ -20,12 +21,12 @@
 <section class="footer">
     <div class="container">
         <div class="colums">
-            <div class="column">&copy; chick_0</div>
+            <div class="column">&copy; {config.name}</div>
             <div class="column">
-                <a href="https://github.com/chick0">Github</a>
+                <a href="{config.github}">Github</a>
             </div>
             <div class="column">
-                <a href="mailto:chick_0@ch1ck.xyz">Email</a>
+                <a href="mailto:{config.email}">Email</a>
             </div>
         </div>
     </div>

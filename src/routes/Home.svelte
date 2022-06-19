@@ -4,6 +4,7 @@
     import { getProjects, getProjectsWithTags } from '../url.js';
     import { isLogined } from '../storage.js';
     import { pageStore, scrollStore, tagStore } from '../store.js';
+    import { config } from "../config.js";
 
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
@@ -244,10 +245,10 @@
 
 <section class="section">
     <div class="container">
-        <h1 class="title is-1" on:click={nameClicked}>chick_0</h1>
+        <h1 class="title is-1" on:click={nameClicked}>{config.name}</h1>
         <div class="block">
-            <a class="button is-dark is-medium" href="https://github.com/chick0" target="_blank">Github</a>
-            <a class="button is-link is-medium" href="mailto:chick_0@ch1ck.xyz" target="_blank">Email</a>
+            <a class="button is-dark is-medium" href="{config.github}" target="_blank">Github</a>
+            <a class="button is-link is-medium" href="mailto:{config.email}" target="_blank">Email</a>
         </div>
     <!-- svelte-ignore missing-declaration -->
     {#if isProduction == false}
