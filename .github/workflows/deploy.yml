@@ -1,4 +1,4 @@
-name: Build and Deploy to Firebase Hosting
+name: Build and Deploy
 
 on:
   push:
@@ -23,10 +23,9 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@master
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CH1CK_XYZ_77DAD }}'
+          projectId: ch1ck-xyz-77dad
