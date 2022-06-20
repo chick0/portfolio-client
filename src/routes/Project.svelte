@@ -124,10 +124,19 @@
     </div>
 </section>
 
-<!-- *sticky* -->
+<!-- button for desktop or tablet -->
 <button
-    class="button is-primary is-medium is-fullwidth container"
+    class="button is-primary is-medium is-fullwidth container is-hidden-touch"
     style="position: -webkit-sticky; position: sticky; bottom: 10px;"
+    on:click={()=>{push("/")}}
+>
+    프로젝트 목록으로 이동
+</button>
+
+<!-- button for mobile -->
+<button
+    class="button is-primary is-medium is-fullwidth container is-hidden-desktop"
+    style="position: -webkit-sticky; position: sticky; bottom: 10px; max-width: 90%;"
     on:click={()=>{push("/")}}
 >
     프로젝트 목록으로 이동
