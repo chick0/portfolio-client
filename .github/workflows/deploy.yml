@@ -23,6 +23,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: debug test
+        run: |
+          ls -al
+
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
