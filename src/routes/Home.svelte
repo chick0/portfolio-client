@@ -185,6 +185,7 @@
 
         setTimeout(() => {
             showTag(get(tagStore));
+            tagStore.set(null);
         }, 50);
     } else {
         fetchProject();
