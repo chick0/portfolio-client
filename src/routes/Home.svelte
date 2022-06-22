@@ -271,6 +271,7 @@
             <h5 class="title is-5">프로젝트 관리</h5>
             <div class="buttons">
                 <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트</button>
+                <button class="button is-primary" on:click={()=>{push("/storage")}}>파일 관리</button>
             </div>
         </div>
     {/if}

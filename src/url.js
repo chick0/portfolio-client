@@ -58,3 +58,23 @@ export function revokeSessionWithId(session_id){
 export function getRenewToken(){
     return `${HOST}/v3/auth/token`;
 }
+
+// 파일 업로드
+export function storageUpload(){
+    return `${HOST}/v3/storage/upload`;
+}
+
+// 업로드된 파일 목록
+export function storageList(){
+    return `${HOST}/v3/storage/list`;
+}
+
+// 업로드된 파일 관리
+export function storageManage(uuid){
+    return `${HOST}/v3/storage/manage/${uuid}`;
+}
+
+// 파일 다운로드 링크
+export function storageDownload(uuid){
+    return `${HOST}/v3/storage/download/${uuid}`;
+}

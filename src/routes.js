@@ -8,6 +8,8 @@ import Session from './routes/Session.svelte';
 import NewProject from './routes/NewProject.svelte';
 import Project from './routes/Project.svelte';
 import ProjectEdit from './routes/ProjectEdit.svelte';
+// Storage
+import Storage from './routes/Storage.svelte';
 // etc..
 import Build from './routes/Build.svelte';
 import NotFound from './NotFound.svelte';
@@ -23,6 +25,8 @@ export default {
     '/new-project': NewProject,
     '/project/:uuid': Project,
     '/project/:uuid/edit': ProjectEdit,
+
+    '/storage': Storage,
 
     '/build': Build,
     '*': NotFound,
