@@ -1,21 +1,21 @@
 <script>
     import { push } from 'svelte-spa-router';
-    import { getHistory, revokeSessionWithId } from '../url.js';
+    import { session, revokeSessionWithId } from '../url.js';
     import { getToken } from '../storage.js';
 
-    let history = [];
-    let isHistoryLoaded = false;
+    let sessionList = [];
+    let isSessionListLoaded = false;
 
-    function fetchHistory(){
-        fetch(getHistory(), {
+    function fetchSessionList(){
+        fetch(session(), {
             method: "GET",
             headers: {
                 "Authorization": getToken(),
             }
         }).then((resp) => resp.json()).then((data) => {
-            if(data.historyList != undefined){
-                Object.assign(history, data.historyList);
-                isHistoryLoaded = true;
+            if(data.sessionList != undefined){
+                Object.assign(sessionList, data.sessionList);
+                isSessionListLoaded = true;
             } else {
                 alert("오류가 발생했습니다.");
                 push("/auth");
@@ -23,7 +23,7 @@
         });
     }
 
-    fetchHistory();
+    fetchSessionList();
 
     function askRevokeSession(session_id){
         if(confirm("해당 세션을 취소하시겠습니까?")){
@@ -36,25 +36,50 @@
                 if(data.status == true){
                     alert("해당 세션이 취소되었습니다.");
                     isHistoryLoaded = false;
-                    fetchHistory();
+                    fetchSessionList();
                 } else {
                     alert(data.detail.alert);
                 }
-            })
+            });
         }
+    }
+
+    function removeAllSession(){
+        if(confirm("전체 세션을 삭제하시겠습니까?")){
+            fetch(session(), {
+                method: "DELETE",
+                headers: {
+                    'Authorization': getToken()
+                }
+            }).then((resp) => resp.json()).then((data) => {
+                if(data.status == true){
+                    push("/auth");
+                } else {
+                    alert(data.detail.alert);
+                }
+            });
+        }
+
     }
 </script>
 
 <section class="section">
     <div class="container">
-        <h1 class="title is-1">로그인 기록</h1>
+        <h1 class="title is-1">인증 세션</h1>
+
+        <div class="box">
+            <h5 class="title is-5">위험 메뉴</h5>
+            <div class="buttons">
+                <button class="button is-danger" on:click={()=>{removeAllSession()}}>전체 세션 삭제하기</button>
+            </div>
+        </div>
     </div>
 </section>
 
-{#if isHistoryLoaded == true}
+{#if isSessionListLoaded == true}
 <section class="section">
     <div class="container">
-        {#each history as ctx}
+        {#each sessionList as ctx}
         <div class="box" on:click={()=>{askRevokeSession(ctx.id)}}>
             <div class="content is-medium">
                 <p>생성 날짜 : {ctx.creation_date.pretty}</p>
@@ -76,15 +101,24 @@
 <section class="section">
     <div class="container">
         <h2 class="title is-2">잠시만요...</h2>
-        <p class="subtitle">로그인 기록을 불러오고 있습니다...</p>
+        <p class="subtitle">인증 세션 목록을 불러오고 있습니다...</p>
     </div>
 </section>
 {/if}
 
-<!-- *sticky* -->
+<!-- button for desktop or tablet -->
 <button
-    class="button is-primary is-medium is-fullwidth container"
+    class="button is-primary is-medium is-fullwidth container is-hidden-touch"
     style="position: -webkit-sticky; position: sticky; bottom: 10px;"
+    on:click={()=>{push("/")}}
+>
+    프로젝트 목록으로 이동
+</button>
+
+<!-- button for mobile -->
+<button
+    class="button is-primary is-medium is-fullwidth container is-hidden-desktop"
+    style="position: -webkit-sticky; position: sticky; bottom: 10px; max-width: 90%;"
     on:click={()=>{push("/")}}
 >
     프로젝트 목록으로 이동

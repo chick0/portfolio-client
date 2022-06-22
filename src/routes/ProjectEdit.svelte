@@ -16,7 +16,7 @@
         fetch(url).then((resp) => resp.json()).then((data) => {
             Object.assign(project, data);
 
-            project['tags'] = project['tags'].join(", ");
+            project['tag'] = project['tags'].join(", ");
             project['date'] = project['date']['ymd'];
 
             isProjectLoaded = true;
@@ -29,14 +29,14 @@
         isProjectLoaded = false;
 
         fetch(url, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 'Authorization': getToken(),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(project)
         }).then((resp) => resp.json()).then((data) => {
-            if(data.status == true){
+            if(data.result == true){
                 push(`/project/${params.uuid}`);
             } else {
                 alert(data.detail.alert);

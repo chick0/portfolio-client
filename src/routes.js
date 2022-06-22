@@ -2,8 +2,8 @@
 import Home from './routes/Home.svelte';
 // Auth
 import Auth from './routes/Auth.svelte';
-import History from './routes/History.svelte';
 import Logout from './routes/Logout.svelte';
+import Session from './routes/Session.svelte';
 // Project
 import NewProject from './routes/NewProject.svelte';
 import Project from './routes/Project.svelte';
@@ -17,8 +17,8 @@ export default {
     '/': Home,
 
     '/auth': Auth,
-    '/auth/history': History,
     '/auth/logout': Logout,
+    '/auth/session': Session,
 
     '/new-project': NewProject,
     '/project/:uuid': Project,

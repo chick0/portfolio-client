@@ -262,7 +262,7 @@
         <div class="box">
             <h5 class="title is-5">계정 관리</h5>
             <div class="buttons">
-                <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록</button>
+                <button class="button is-info is-light" on:click={()=>{push("/auth/session")}}>인증 세션 목록</button>
                 <button class="button is-light" on:click={()=>{push("/auth/logout")}}>로그아웃</button>
             </div>
         </div>
