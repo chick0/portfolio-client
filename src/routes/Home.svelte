@@ -176,7 +176,9 @@
         projectsLoaded = true;
 
         let scroll = get(scrollStore);
-        const unsubscribe = scrollStore.subscribe((v) => {
+        let unsubscribe = undefined;
+ 
+        unsubscribe = scrollStore.subscribe((v) => {
             if(v == 0){
                 scrollStore.set(scroll);
                 unsubscribe();

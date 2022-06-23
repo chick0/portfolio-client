@@ -19,7 +19,10 @@
         "is-primary is-light", "is-link is-light", "is-info is-light", "is-success is-light", "is-warning is-light", "is-danger is-light"
     ];
 
-    if(typeof url == "string"){
+    if(typeof url !== "string"){
+        // 올바른 프로젝트 ID가 아님
+        push("/");
+    } else{
         renderer.link = (href, title, text) => {
             return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
         };
@@ -39,41 +42,6 @@
             Object.assign(buttons, json.buttons);
             buttons = buttons;
         });
-    } else {
-        // 올바른 프로젝트 ID가 아님
-        push("/");
-    }
-
-    function projectDelete(){
-        if(confirm("해당 프로젝트를 삭제하시겠습니까? (1/2)")){
-            if(confirm("해당 프로젝트를 정말로 삭제하시겠습니까? (2/2)")){
-                fetch(url, {
-                    method: "DELETE",
-                    headers: {
-                        'Authorization': getToken()
-                    }
-                }).then((resp) => resp.json()).then((data) => {
-                    if(data.status == true){
-                        alert("프로젝트가 삭제되었습니다.");
-                        push("/");
-                    } else {
-                        alert("프로젝트 삭제에 실패했습니다.");
-                    }
-
-                    projectLoaded = true;
-                });
-
-                projectLoaded = false;
-                return;
-            }
-        }
-
-        alert("취소되었습니다.");
-    }
-
-    function showTag(tag){
-        tagStore.set(tag);
-        push("/");
     }
 </script>
 
@@ -99,7 +67,10 @@
         {#each project.tags as tag}
             <button
                 class="button is-warning"
-                on:click|preventDefault={()=>{showTag(tag)}}
+                on:click|preventDefault={()=>{
+                    tagStore.set(tag);
+                    push("/");
+                }}
             >
                 #{tag}
             </button>
@@ -110,8 +81,45 @@
         <div class="box">
             <h5 class="title is-5">프로젝트 관리</h5>
             <div class="buttons">
-                <button class="button is-danger is-light" on:click={()=>{push(`/project/${project.uuid}/edit`)}}>프로젝트 수정</button>
-                <button class="button is-danger" on:click={projectDelete}>프로젝트 삭제</button>    
+                <button
+                    class="button is-danger is-light"
+                    on:click={() => {
+                        push(`/project/${project.uuid}/edit`);
+                    }}
+                >
+                    프로젝트 수정
+                </button>
+                <button
+                    class="button is-danger"
+                    on:click={() => {
+                        if(confirm("해당 프로젝트를 삭제하시겠습니까? (1/2)")){
+                            if(confirm("해당 프로젝트를 정말로 삭제하시겠습니까? (2/2)")){
+                                fetch(url, {
+                                    method: "DELETE",
+                                    headers: {
+                                        'Authorization': getToken()
+                                    }
+                                }).then((resp) => resp.json()).then((data) => {
+                                    if(data.status == true){
+                                        alert("프로젝트가 삭제되었습니다.");
+                                        push("/");
+                                    } else {
+                                        alert("프로젝트 삭제에 실패했습니다.");
+                                    }
+
+                                    projectLoaded = true;
+                                });
+
+                                projectLoaded = false;
+                                return;
+                            }
+                        }
+
+                        alert("취소되었습니다.");
+                    }}
+                >
+                    프로젝트 삭제
+                </button>    
             </div>
         </div>
 
