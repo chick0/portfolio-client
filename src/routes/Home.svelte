@@ -257,19 +257,17 @@
 
 <section class="section">
     <div class="container">
-        <h1 class="title is-1" on:click={nameClicked}>{config.name}</h1>
+        <h1 class="title is-1" on:click="{nameClicked}">{config.name}</h1>
         <p class="subtitle">제 프로젝트를 소개합니다.</p>
         <div class="buttons">
             <a
                 class="button is-dark is-medium"
-                href={config.github}
-                target="_blank">Github</a
-            >
+                href="{config.github}"
+                target="_blank">Github</a>
             <a
                 class="button is-link is-medium"
                 href="mailto:{config.email}"
-                target="_blank">Email</a
-            >
+                target="_blank">Email</a>
         </div>
         {#if env == false}
             <div class="notification is-danger is-light">
@@ -282,16 +280,14 @@
                 <div class="buttons">
                     <button
                         class="button is-info is-light"
-                        on:click={() => {
-                            push("/auth/session");
-                        }}>인증 세션 목록</button
-                    >
+                        on:click="{() => {
+                            push('/auth/session');
+                        }}">인증 세션 목록</button>
                     <button
                         class="button is-light"
-                        on:click={() => {
-                            push("/auth/logout");
-                        }}>로그아웃</button
-                    >
+                        on:click="{() => {
+                            push('/auth/logout');
+                        }}">로그아웃</button>
                 </div>
             </div>
 
@@ -300,23 +296,21 @@
                 <div class="buttons">
                     <button
                         class="button is-primary is-light"
-                        on:click={() => {
-                            push("/new-project");
-                        }}>새로운 프로젝트</button
-                    >
+                        on:click="{() => {
+                            push('/new-project');
+                        }}">새로운 프로젝트</button>
                     <button
                         class="button is-primary"
-                        on:click={() => {
-                            push("/storage");
-                        }}>파일 관리</button
-                    >
+                        on:click="{() => {
+                            push('/storage');
+                        }}">파일 관리</button>
                 </div>
             </div>
         {/if}
     </div>
 </section>
 
-<div id="cursor-postion" />
+<div id="cursor-postion"></div>
 
 {#if projectsLoaded == false}
     <section class="section">
@@ -335,10 +329,9 @@
                             #{tag}
                             <button
                                 class="delete"
-                                on:click={() => {
+                                on:click="{() => {
                                     clearTag(tag);
-                                }}
-                            />
+                                }}"></button>
                         </span>
                     {/each}
                 </div>
@@ -348,20 +341,18 @@
                 {#each projects as p}
                     <div
                         class="box"
-                        on:click={() => {
+                        on:click="{() => {
                             projectMove(p.uuid);
-                        }}
-                    >
+                        }}">
                         <h2 class="title is-4">{p.title}</h2>
                         <p class="subtitle">{p.date}</p>
                         <div class="block buttons">
                             {#each p.tags as tag}
                                 <button
                                     class="button is-warning"
-                                    on:click|preventDefault={() => {
+                                    on:click|preventDefault="{() => {
                                         showTag(tag);
-                                    }}
-                                >
+                                    }}">
                                     #{tag}
                                 </button>
                             {/each}
@@ -379,35 +370,31 @@
                     <button
                         class="pagination-previous"
                         style="background-color:#FFF;"
-                        on:click={() => {
+                        on:click="{() => {
                             updatePage(page - 1);
-                        }}>&Lt;</button
-                    >
+                        }}">&Lt;</button>
                     <button
                         class="pagination-next"
                         style="background-color:#FFF;"
-                        on:click={() => {
+                        on:click="{() => {
                             updatePage(page + 1);
-                        }}>&Gt;</button
-                    >
+                        }}">&Gt;</button>
                     <ul class="pagination-list">
                         {#each getCenterPage() as index}
                             <li>
                                 {#if index == page}
                                     <button
                                         class="pagination-link is-current"
-                                        on:click={() => {
+                                        on:click="{() => {
                                             updatePage(index);
-                                        }}>{index}</button
-                                    >
+                                        }}">{index}</button>
                                 {:else}
                                     <button
                                         class="pagination-link"
                                         style="background-color:#FFF;"
-                                        on:click={() => {
+                                        on:click="{() => {
                                             updatePage(index);
-                                        }}>{index}</button
-                                    >
+                                        }}">{index}</button>
                                 {/if}
                             </li>
                         {/each}

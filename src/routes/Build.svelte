@@ -17,10 +17,9 @@
         <h1 class="title is-1">빌드 정보</h1>
         <p
             class="subtitle has-text-link is-clickable"
-            on:click={() => {
-                push("/");
-            }}
-        >
+            on:click="{() => {
+                push('/');
+            }}">
             프로젝트 목록으로 돌아가기
         </p>
         {#if env == false}
@@ -49,23 +48,22 @@
             </div>
             <button
                 class="button is-primary"
-                on:click={() => {
+                on:click="{() => {
                     if (!isGithub) {
-                        alert("깃헙에 저장된 프로젝트가 아닙니다.");
+                        alert('깃헙에 저장된 프로젝트가 아닙니다.');
                     } else {
                         fetch(`https://api.github.com/repos/${remote}/commits`)
                             .then((resp) => resp.json())
                             .then((json) => {
                                 let top = json[0];
-                                if (top.sha == "commitId") {
-                                    alert("최신 버전 입니다.");
+                                if (top.sha == 'commitId') {
+                                    alert('최신 버전 입니다.');
                                 } else {
-                                    alert("최신 버전이 아닙니다.");
+                                    alert('최신 버전이 아닙니다.');
                                 }
                             });
                     }
-                }}
-            >
+                }}">
                 check from remote
             </button>
         </div>

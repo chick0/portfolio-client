@@ -37,10 +37,10 @@
             <div class="buttons">
                 <button
                     class="button is-danger"
-                    on:click={() => {
-                        if (confirm("전체 세션을 삭제하시겠습니까?")) {
+                    on:click="{() => {
+                        if (confirm('전체 세션을 삭제하시겠습니까?')) {
                             fetch(session(), {
-                                method: "DELETE",
+                                method: 'DELETE',
                                 headers: {
                                     Authorization: getToken(),
                                 },
@@ -48,16 +48,15 @@
                                 .then((resp) => resp.json())
                                 .then((data) => {
                                     if (data.status == true) {
-                                        alert("전체 세션에 삭제되었습니다.");
+                                        alert('전체 세션에 삭제되었습니다.');
                                         clearToken();
-                                        push("/");
+                                        push('/');
                                     } else {
                                         alert(data.detail.alert);
                                     }
                                 });
                         }
-                    }}
-                >
+                    }}">
                     전체 세션 삭제하기
                 </button>
             </div>
@@ -71,10 +70,10 @@
             {#each sessionList as ctx}
                 <div
                     class="box"
-                    on:click={() => {
-                        if (confirm("해당 세션을 취소하시겠습니까?")) {
+                    on:click="{() => {
+                        if (confirm('해당 세션을 취소하시겠습니까?')) {
                             fetch(revokeSessionWithId(ctx.id), {
-                                method: "DELETE",
+                                method: 'DELETE',
                                 headers: {
                                     Authorization: getToken(),
                                 },
@@ -82,7 +81,7 @@
                                 .then((resp) => resp.json())
                                 .then((data) => {
                                     if (data.status == true) {
-                                        alert("해당 세션이 취소되었습니다.");
+                                        alert('해당 세션이 취소되었습니다.');
 
                                         const index = sessionList.findIndex(
                                             (e) => e.id == ctx.id
@@ -93,8 +92,7 @@
                                     }
                                 });
                         }
-                    }}
-                >
+                    }}">
                     <div class="content is-medium">
                         <p>생성 날짜 : {ctx.creation_date.pretty}</p>
                         <p>요청 IP : {ctx.ip}</p>
@@ -103,8 +101,7 @@
                         {:else}
                             <p>
                                 <b class="has-text-success"
-                                    >* 만료되지 않은 세션</b
-                                >
+                                    >* 만료되지 않은 세션</b>
                             </p>
                         {/if}
                         {#if ctx.same == true}
@@ -128,10 +125,9 @@
 <button
     class="button is-primary is-medium is-fullwidth container is-hidden-touch"
     style="position: -webkit-sticky; position: sticky; bottom: 10px;"
-    on:click={() => {
-        push("/");
-    }}
->
+    on:click="{() => {
+        push('/');
+    }}">
     프로젝트 목록으로 이동
 </button>
 
@@ -139,11 +135,10 @@
 <button
     class="button is-primary is-medium is-fullwidth container is-hidden-desktop"
     style="position: -webkit-sticky; position: sticky; bottom: 10px; max-width: 90%;"
-    on:click={() => {
-        push("/");
-    }}
->
+    on:click="{() => {
+        push('/');
+    }}">
     프로젝트 목록으로 이동
 </button>
 
-<section class="section" />
+<section class="section"></section>

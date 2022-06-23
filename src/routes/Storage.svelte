@@ -52,28 +52,27 @@
             <div class="buttons mb-0">
                 <button
                     class="button is-info is-light is-medium"
-                    on:click={() => {
-                        document.getElementById("storage-upload").click();
-                    }}
-                >
+                    on:click="{() => {
+                        document.getElementById('storage-upload').click();
+                    }}">
                     파일 선택
                 </button>
                 <div
                     class="button is-primary is-primary is-light is-medium"
-                    on:click={() => {
+                    on:click="{() => {
                         if (newFile == false) {
-                            alert("먼저 파일을 선택해주세요.");
+                            alert('먼저 파일을 선택해주세요.');
                             return;
                         }
 
                         let data = new FormData();
                         data.append(
-                            "file",
-                            document.getElementById("storage-upload").files[0]
+                            'file',
+                            document.getElementById('storage-upload').files[0]
                         );
 
                         fetch(storageUpload(), {
-                            method: "POST",
+                            method: 'POST',
                             headers: {
                                 Authorization: getToken(),
                             },
@@ -85,8 +84,7 @@
                                 files = files;
                                 resetNewUpload();
                             });
-                    }}
-                >
+                    }}">
                     파일 업로드
                 </div>
             </div>
@@ -95,19 +93,18 @@
                 id="storage-upload"
                 type="file"
                 hidden="hidden"
-                on:change={(e) => {
+                on:change="{(e) => {
                     const file = e.target.files[0];
-                    document.getElementById("storage-upload-name").innerText =
+                    document.getElementById('storage-upload-name').innerText =
                         file.name;
 
                     if (file.size >= 1024 * 1024 * 99) {
-                        alert("해당 파일은 업로드 할 수 없습니다.");
+                        alert('해당 파일은 업로드 할 수 없습니다.');
                         resetNewUpload();
                     } else {
                         newFile = true;
                     }
-                }}
-            />
+                }}" />
         </div>
     </div>
 </section>
@@ -127,12 +124,12 @@
                     <h5 class="title is-5">{file.name}</h5>
                     <p class="subtitle">{file.creation_date.pretty}</p>
 
-                    <div id="storage-{file.uuid}" class="block" />
+                    <div id="storage-{file.uuid}" class="block"></div>
 
                     <div class="buttons">
                         <button
                             class="button is-danger is-light"
-                            on:click={() => {
+                            on:click="{() => {
                                 let target = document.getElementById(
                                     `storage-${file.uuid}`
                                 );
@@ -143,15 +140,15 @@
 
                                         if (replace.size >= 1024 * 1024 * 99) {
                                             alert(
-                                                "해당 파일은 업로드 할 수 없습니다."
+                                                '해당 파일은 업로드 할 수 없습니다.'
                                             );
-                                            target.innerHTML = "";
+                                            target.innerHTML = '';
                                         } else {
                                             let data = new FormData();
-                                            data.append("file", replace);
+                                            data.append('file', replace);
 
                                             fetch(storageManage(file.uuid), {
-                                                method: "POST",
+                                                method: 'POST',
                                                 headers: {
                                                     Authorization: getToken(),
                                                 },
@@ -168,33 +165,32 @@
                                                     ] = json;
 
                                                     files = files;
-                                                    target.innerHTML = "";
+                                                    target.innerHTML = '';
                                                 });
                                         }
                                     };
 
-                                    let input = document.createElement("input");
-                                    input.setAttribute("type", "file");
+                                    let input = document.createElement('input');
+                                    input.setAttribute('type', 'file');
                                     input.onchange = updateHandle;
 
                                     target.appendChild(input);
                                 } else {
-                                    target.innerHTML = "";
+                                    target.innerHTML = '';
                                 }
-                            }}
-                        >
+                            }}">
                             파일 수정
                         </button>
                         <button
                             class="button is-danger"
-                            on:click={() => {
+                            on:click="{() => {
                                 if (
                                     confirm(
                                         `'${file.name}'(을)를 삭제하시겠습니까?`
                                     )
                                 ) {
                                     fetch(storageManage(file.uuid), {
-                                        method: "DELETE",
+                                        method: 'DELETE',
                                         headers: {
                                             Authorization: getToken(),
                                         },
@@ -202,26 +198,24 @@
                                         .then((resp) => resp.json())
                                         .then((json) => {
                                             if (json.result == true) {
-                                                alert("파일이 삭제되었습니다.");
+                                                alert('파일이 삭제되었습니다.');
 
                                                 files = files.filter((x) => {
                                                     return x.uuid != file.uuid;
                                                 });
                                             } else {
-                                                alert("오류가 발생했습니다.");
+                                                alert('오류가 발생했습니다.');
                                                 fetchStorageList();
                                             }
                                         });
                                 }
-                            }}
-                        >
+                            }}">
                             파일 삭제
                         </button>
                         <a
                             class="button is-link"
-                            href={storageDownload(file.uuid)}
-                            target="_blank"
-                        >
+                            href="{storageDownload(file.uuid)}"
+                            target="_blank">
                             다운로드
                         </a>
                     </div>
@@ -235,10 +229,9 @@
 <button
     class="button is-primary is-medium is-fullwidth container is-hidden-touch"
     style="position: -webkit-sticky; position: sticky; bottom: 10px;"
-    on:click={() => {
-        push("/");
-    }}
->
+    on:click="{() => {
+        push('/');
+    }}">
     프로젝트 목록으로 이동
 </button>
 
@@ -246,11 +239,10 @@
 <button
     class="button is-primary is-medium is-fullwidth container is-hidden-desktop"
     style="position: -webkit-sticky; position: sticky; bottom: 10px; max-width: 90%;"
-    on:click={() => {
-        push("/");
-    }}
->
+    on:click="{() => {
+        push('/');
+    }}">
     프로젝트 목록으로 이동
 </button>
 
-<section class="section" />
+<section class="section"></section>

@@ -1,5 +1,5 @@
-// eslint-disable-next-line
 export const HOST =
+    // eslint-disable-next-line no-undef
     isProduction === true ? "https://mypt.ch1ck.xyz" : "http://localhost:19564";
 
 // 프로젝트 정보 조회

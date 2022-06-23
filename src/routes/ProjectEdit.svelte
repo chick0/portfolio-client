@@ -67,8 +67,7 @@
                             id="title"
                             class="input"
                             type="text"
-                            bind:value={project.title}
-                        />
+                            bind:value="{project.title}" />
                     </div>
                 </div>
                 <div class="field">
@@ -78,8 +77,7 @@
                             id="dt"
                             class="input"
                             type="date"
-                            bind:value={project.date}
-                        />
+                            bind:value="{project.date}" />
                     </div>
                 </div>
             </div>
@@ -92,8 +90,7 @@
                             id="github"
                             class="input"
                             type="url"
-                            bind:value={project.github}
-                        />
+                            bind:value="{project.github}" />
                     </div>
                 </div>
             </div>
@@ -106,8 +103,7 @@
                             id="web"
                             class="input"
                             type="url"
-                            bind:value={project.web}
-                        />
+                            bind:value="{project.web}" />
                     </div>
                 </div>
             </div>
@@ -120,8 +116,7 @@
                             id="tags"
                             class="input"
                             type="url"
-                            bind:value={project.tags}
-                        />
+                            bind:value="{project.tags}" />
                     </div>
                 </div>
             </div>
@@ -135,8 +130,7 @@
                 <textarea
                     class="textarea is-medium"
                     rows="12"
-                    bind:value={project.a}
-                />
+                    bind:value="{project.a}"></textarea>
             </div>
         </div>
     </section>
@@ -148,8 +142,7 @@
                 <textarea
                     class="textarea is-medium"
                     rows="12"
-                    bind:value={project.b}
-                />
+                    bind:value="{project.b}"></textarea>
             </div>
         </div>
     </section>
@@ -161,8 +154,7 @@
                 <textarea
                     class="textarea is-medium"
                     rows="12"
-                    bind:value={project.c}
-                />
+                    bind:value="{project.c}"></textarea>
             </div>
         </div>
     </section>
@@ -171,8 +163,7 @@
         <div class="container">
             <button
                 class="button is-primary is-large is-fullwidth"
-                on:click={projectSave}>프로젝트 저장</button
-            >
+                on:click="{projectSave}">프로젝트 저장</button>
         </div>
     </section>
 {:else}
@@ -190,20 +181,18 @@
             <div class="column">
                 <button
                     class="button is-link is-large is-fullwidth"
-                    on:click={() => {
-                        push("/");
-                    }}
-                >
+                    on:click="{() => {
+                        push('/');
+                    }}">
                     프로젝트 목록으로 이동
                 </button>
             </div>
             <div class="column">
                 <button
                     class="button is-link is-light is-large is-fullwidth"
-                    on:click={() => {
+                    on:click="{() => {
                         push(`/project/${params.uuid}`);
-                    }}
-                >
+                    }}">
                     프로젝트로 돌아가기
                 </button>
             </div>

@@ -152,10 +152,9 @@
                 <h1 class="title is-1">로그인</h1>
                 <p
                     class="subtitle has-text-link is-clickable"
-                    on:click={() => {
-                        push("/");
-                    }}
-                >
+                    on:click="{() => {
+                        push('/');
+                    }}">
                     프로젝트 목록으로 돌아가기
                 </p>
 
@@ -166,8 +165,7 @@
                             id="email-input"
                             class="input"
                             type="email"
-                            bind:value={email}
-                        />
+                            bind:value="{email}" />
                     </div>
                 </div>
                 <div class="field">
@@ -177,9 +175,8 @@
                             id="password-input"
                             class="input"
                             type="password"
-                            bind:value={password}
-                            on:keypress={goNext}
-                        />
+                            bind:value="{password}"
+                            on:keypress="{goNext}" />
                     </div>
                 </div>
 
@@ -187,8 +184,7 @@
                     <div class="control">
                         <button
                             class="button is-primary is-light is-large is-fullwidth"
-                            on:click={doLogin}>다음</button
-                        >
+                            on:click="{doLogin}">다음</button>
                     </div>
                 </div>
             </div>
@@ -206,17 +202,15 @@
                             id="code-input"
                             class="input"
                             type="tel"
-                            bind:value={code}
-                            on:keypress={goNext}
-                        />
+                            bind:value="{code}"
+                            on:keypress="{goNext}" />
                     </div>
                 </div>
                 <div class="field">
                     <div class="control">
                         <button
                             class="button is-danger is-light is-large is-fullwidth"
-                            on:click={verifyCode}>다음</button
-                        >
+                            on:click="{verifyCode}">다음</button>
                     </div>
                 </div>
             </div>

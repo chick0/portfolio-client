@@ -16,14 +16,14 @@
     });
 </script>
 
-<Router {routes} />
+<Router routes="{routes}" />
 
 <section class="footer">
     <div class="container">
         <div class="colums">
             <div class="column">&copy; {config.name}</div>
             <div class="column">
-                <a href={config.github}>Github</a>
+                <a href="{config.github}">Github</a>
             </div>
             <div class="column">
                 <a href="mailto:{config.email}">Email</a>
