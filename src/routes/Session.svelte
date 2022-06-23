@@ -1,12 +1,14 @@
 <script>
     import { push } from 'svelte-spa-router';
     import { session, revokeSessionWithId } from '../url.js';
-    import { getToken } from '../storage.js';
+    import { isLogined, getToken, clearToken } from '../storage.js';
 
     let sessionList = [];
-    let isSessionListLoaded = false;
+    let isLoaded = false;
 
-    function fetchSessionList(){
+    if(!isLogined()){
+        push("/");
+    } else {
         fetch(session(), {
             method: "GET",
             headers: {
@@ -15,51 +17,12 @@
         }).then((resp) => resp.json()).then((data) => {
             if(data.sessionList != undefined){
                 Object.assign(sessionList, data.sessionList);
-                isSessionListLoaded = true;
+                isLoaded = true;
             } else {
                 alert("오류가 발생했습니다.");
                 push("/auth");
             }
         });
-    }
-
-    fetchSessionList();
-
-    function askRevokeSession(session_id){
-        if(confirm("해당 세션을 취소하시겠습니까?")){
-            fetch(revokeSessionWithId(session_id), {
-                method: "DELETE",
-                headers: {
-                    'Authorization': getToken()
-                }
-            }).then((resp) => resp.json()).then((data) => {
-                if(data.status == true){
-                    alert("해당 세션이 취소되었습니다.");
-                    isHistoryLoaded = false;
-                    fetchSessionList();
-                } else {
-                    alert(data.detail.alert);
-                }
-            });
-        }
-    }
-
-    function removeAllSession(){
-        if(confirm("전체 세션을 삭제하시겠습니까?")){
-            fetch(session(), {
-                method: "DELETE",
-                headers: {
-                    'Authorization': getToken()
-                }
-            }).then((resp) => resp.json()).then((data) => {
-                if(data.status == true){
-                    push("/auth");
-                } else {
-                    alert(data.detail.alert);
-                }
-            });
-        }
-
     }
 </script>
 
@@ -70,17 +33,57 @@
         <div class="box">
             <h5 class="title is-5">위험 메뉴</h5>
             <div class="buttons">
-                <button class="button is-danger" on:click={()=>{removeAllSession()}}>전체 세션 삭제하기</button>
+                <button
+                    class="button is-danger"
+                    on:click={()=>{
+                        if(confirm("전체 세션을 삭제하시겠습니까?")){
+                            fetch(session(), {
+                                method: "DELETE",
+                                headers: {
+                                    'Authorization': getToken()
+                                }
+                            }).then((resp) => resp.json()).then((data) => {
+                                if(data.status == true){
+                                    alert("전체 세션에 삭제되었습니다.");
+                                    clearToken();
+                                    push("/");
+                                } else {
+                                    alert(data.detail.alert);
+                                }
+                            });
+                        }
+                    }}
+                >
+                    전체 세션 삭제하기
+                </button>
             </div>
         </div>
     </div>
 </section>
 
-{#if isSessionListLoaded == true}
+{#if isLoaded == true}
 <section class="section">
     <div class="container">
         {#each sessionList as ctx}
-        <div class="box" on:click={()=>{askRevokeSession(ctx.id)}}>
+        <div class="box" on:click={()=>{
+            if(confirm("해당 세션을 취소하시겠습니까?")){
+                fetch(revokeSessionWithId(ctx.id), {
+                    method: "DELETE",
+                    headers: {
+                        'Authorization': getToken()
+                    }
+                }).then((resp) => resp.json()).then((data) => {
+                    if(data.status == true){
+                        alert("해당 세션이 취소되었습니다.");
+
+                        const index = sessionList.findIndex((e) => e.id == ctx.id);                        
+                        sessionList[index].revoked = true;
+                    } else {
+                        alert(data.detail.alert);
+                    }
+                });
+            }
+        }}>
             <div class="content is-medium">
                 <p>생성 날짜 : {ctx.creation_date.pretty}</p>
                 <p>요청 IP : {ctx.ip}</p>
