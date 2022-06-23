@@ -6,18 +6,20 @@
     fetch(logout(), {
         method: "DELETE",
         headers: {
-            'Authorization': getToken()
-        }
-    }).then((resp) => resp.json()).then((data) => {
-        if(data.status == true){
-            alert("로그아웃 되었습니다.");
-        } else {
-            alert("오류가 발생했습니다.");
-        }
-
-        clearToken();
-        push("/");
+            Authorization: getToken(),
+        },
     })
+        .then((resp) => resp.json())
+        .then((data) => {
+            if (data.status == true) {
+                alert("로그아웃 되었습니다.");
+            } else {
+                alert("오류가 발생했습니다.");
+            }
+
+            clearToken();
+            push("/");
+        });
 </script>
 
 <section class="section">

@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 
 // 토큰 상태
 // - 스토리지와 인증 처리 컴퍼넌트에서 상태 공유 할 때 사용됨
-// - 'checkRequired': 검증이 필요함 
+// - 'checkRequired': 검증이 필요함
 // -            true: 사용 가능한 인증 토큰
 // -           false: 사용 불가능한 인증 토큰
 export const tokenStatus = writable(null);
