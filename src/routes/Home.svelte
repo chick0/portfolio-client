@@ -176,7 +176,9 @@
         projectsLoaded = true;
 
         let scroll = get(scrollStore);
-        const unsubscribe = scrollStore.subscribe((v) => {
+        let unsubscribe = undefined;
+ 
+        unsubscribe = scrollStore.subscribe((v) => {
             if(v == 0){
                 scrollStore.set(scroll);
                 unsubscribe();
@@ -262,7 +264,7 @@
         <div class="box">
             <h5 class="title is-5">계정 관리</h5>
             <div class="buttons">
-                <button class="button is-info is-light" on:click={()=>{push("/auth/history")}}>로그인 기록</button>
+                <button class="button is-info is-light" on:click={()=>{push("/auth/session")}}>인증 세션 목록</button>
                 <button class="button is-light" on:click={()=>{push("/auth/logout")}}>로그아웃</button>
             </div>
         </div>
@@ -271,6 +273,7 @@
             <h5 class="title is-5">프로젝트 관리</h5>
             <div class="buttons">
                 <button class="button is-primary is-light" on:click={()=>{push("/new-project")}}>새로운 프로젝트</button>
+                <button class="button is-primary" on:click={()=>{push("/storage")}}>파일 관리</button>
             </div>
         </div>
     {/if}

@@ -117,7 +117,7 @@
             body: JSON.stringify({
                 user_id,
                 request_id,
-                code,
+                token: code,
             })
         }).then((resp) => resp.json()).then((data)=>{
             // 발급된 토큰이 없다면
