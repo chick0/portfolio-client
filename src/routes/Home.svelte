@@ -6,7 +6,7 @@
     import { pageStore, scrollStore, tagStore } from "../store.js";
     import { config } from "../config.js";
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-undef
     let env = isProduction;
 
     // 프로젝트 화면으로 이동하는 것 방지

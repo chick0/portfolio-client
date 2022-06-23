@@ -2,7 +2,7 @@
     import { push } from "svelte-spa-router";
     import { HOST } from "../url.js";
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-undef
     let env = isProduction;
 
     let short = "commitId".slice(0, 7);
