@@ -78,3 +78,13 @@ export function storageManage(uuid){
 export function storageDownload(uuid){
     return `${HOST}/v3/storage/download/${uuid}`;
 }
+
+// 버튼 생성
+export function buttonCreate(project_uuid){
+    return `${HOST}/v3/button/${project_uuid}`;
+}
+
+// 버튼 수정/삭제 & 불러오기
+export function buttonUpdate(button_uuid){
+    return `${HOST}/v3/button/${button_uuid}`;
+}
