@@ -122,6 +122,18 @@
     // 프로젝트를 불러오고 있는지 체크할때 사용할 변수
     let projectsLoaded = false;
 
+    let timeoutID = undefined;
+    let fetchError = false;
+    const setFetchError = () => {
+        fetchError = true;
+    };
+
+    $: if (projectsLoaded === true) {
+        clearTimeout(timeoutID);
+    } else {
+        timeoutID = setTimeout(setFetchError, 1200);
+    }
+
     function fetchProject() {
         // API 요청을 보낼 URL 가져오기
         let url = getURL();
@@ -317,6 +329,23 @@
         <div class="container">
             <h2 class="title is-2">잠시만요...</h2>
             <p class="subtitle">프로젝트 목록을 불러오고 있습니다...</p>
+            {#if fetchError == true}
+                <div class="notification is-danger is-light">
+                    <div class="content is-medium">
+                        <p>
+                            서버 오류로 인해 프로젝트 목록을 불러오는데
+                            실패했습니다.
+                        </p>
+                        <p>
+                            아래의 버튼을 클릭해 서버의 상태를 확인 할 수
+                            있습니다.
+                        </p>
+                    </div>
+                    <a class="button is-danger" href="{config.url.status}">
+                        서버 상태 확인하기
+                    </a>
+                </div>
+            {/if}
         </div>
     </section>
 {:else}

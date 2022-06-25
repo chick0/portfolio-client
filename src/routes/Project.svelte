@@ -3,6 +3,7 @@
     import { Renderer, setOptions, parse } from "marked";
     import { getProject, buttonCreate, buttonUpdate } from "../url.js";
     import { isLogined, getToken } from "../storage.js";
+    import { config } from "../config.js";
     import { tagStore } from "../store.js";
     export let params = {};
 
@@ -32,6 +33,18 @@
         "is-warning is-light",
         "is-danger is-light",
     ];
+
+    let timeoutID = undefined;
+    let fetchError = false;
+    const setFetchError = () => {
+        fetchError = true;
+    };
+
+    $: if (projectLoaded === true) {
+        clearTimeout(timeoutID);
+    } else {
+        timeoutID = setTimeout(setFetchError, 1200);
+    }
 
     if (typeof url !== "string") {
         // 올바른 프로젝트 ID가 아님
@@ -435,7 +448,24 @@
     <section class="section">
         <div class="container">
             <h1 class="title is-1">잠시만요...</h1>
-            <p>프로젝트 정보를 불러오고 있습니다...</p>
+            <p class="subtitle">프로젝트 정보를 불러오고 있습니다...</p>
+            {#if fetchError == true}
+                <div class="notification is-danger is-light">
+                    <div class="content is-medium">
+                        <p>
+                            서버 오류로 인해 프로젝트 정보를 불러오는데
+                            실패했습니다.
+                        </p>
+                        <p>
+                            아래의 버튼을 클릭해 서버의 상태를 확인 할 수
+                            있습니다.
+                        </p>
+                    </div>
+                    <a class="button is-danger" href="{config.url.status}">
+                        서버 상태 확인하기
+                    </a>
+                </div>
+            {/if}
         </div>
     </section>
 {/if}
