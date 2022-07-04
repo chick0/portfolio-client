@@ -12,7 +12,7 @@
     let project = {};
     let isProjectLoaded = false;
 
-    if (typeof url == "string") {
+    if (url != undefined) {
         fetch(url)
             .then((resp) => resp.json())
             .then((data) => {

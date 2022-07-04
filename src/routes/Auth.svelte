@@ -47,9 +47,9 @@
 
     // 세션 스토리지에 저장된 상태를 복구해야하는지 검사
     if (sessionStorage.getItem(AUTH_STATUS) === "true") {
-        step = sessionStorage.getItem(AUTH_STEP);
-        user_id = sessionStorage.getItem(AUTH_USER);
-        request_id = sessionStorage.getItem(AUTH_REQUEST);
+        step = Number(sessionStorage.getItem(AUTH_STEP));
+        user_id = Number(sessionStorage.getItem(AUTH_USER));
+        request_id = Number(sessionStorage.getItem(AUTH_REQUEST));
     }
 
     function goNext(keyBoardDown) {
@@ -100,9 +100,9 @@
 
                         // 세션 스토리지를 활용해 현재 상태 저장
                         sessionStorage.setItem(AUTH_STATUS, "true");
-                        sessionStorage.setItem(AUTH_STEP, 2);
-                        sessionStorage.setItem(AUTH_USER, user_id);
-                        sessionStorage.setItem(AUTH_REQUEST, request_id);
+                        sessionStorage.setItem(AUTH_STEP, '2');
+                        sessionStorage.setItem(AUTH_USER, user_id.toString());
+                        sessionStorage.setItem(AUTH_REQUEST, request_id.toString());
                     } else {
                         alert(data.detail.alert);
                     }

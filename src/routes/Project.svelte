@@ -46,10 +46,11 @@
         timeoutID = setTimeout(setFetchError, 1200);
     }
 
-    if (typeof url !== "string") {
+    if (url != undefined) {
         // 올바른 프로젝트 ID가 아님
         push("/");
     } else {
+        // @ts-ignore
         renderer.link = (href, title, text) => {
             return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
         };

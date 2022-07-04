@@ -11,10 +11,13 @@
     let newFile = false;
     let files = [];
 
+    let upload = undefined;
+    let upload_name = undefined;
+
     function resetNewUpload() {
         newFile = false;
-        document.getElementById("storage-upload").value = "";
-        document.getElementById("storage-upload-name").innerText = "선택된 파일 없음";
+        upload.value = "";
+        upload_name.innerText = "선택된 파일 없음";
     }
 
     function fetchStorageList() {
@@ -41,13 +44,13 @@
 
         <div class="box">
             <h5 class="title is-5">파일 업로드</h5>
-            <p class="subtitle" id="storage-upload-name">선택된 파일 없음</p>
+            <p class="subtitle" bind:this="{upload_name}">선택된 파일 없음</p>
 
             <div class="buttons mb-0">
                 <button
                     class="button is-info is-light is-medium"
                     on:click="{() => {
-                        document.getElementById('storage-upload').click();
+                        upload.click();
                     }}">
                     파일 선택
                 </button>
@@ -60,7 +63,7 @@
                         }
 
                         let data = new FormData();
-                        data.append('file', document.getElementById('storage-upload').files[0]);
+                        data.append('file', upload.files[0]);
 
                         fetch(storageUpload(), {
                             method: 'POST',
@@ -81,12 +84,12 @@
             </div>
 
             <input
-                id="storage-upload"
                 type="file"
-                hidden="hidden"
-                on:change="{(e) => {
-                    const file = e.target.files[0];
-                    document.getElementById('storage-upload-name').innerText = file.name;
+                hidden
+                bind:this="{upload}"
+                on:change="{() => {
+                    const file = upload.files[0];
+                    upload_name.innerText = file.name;
 
                     if (file.size >= 1024 * 1024 * 99) {
                         alert('해당 파일은 업로드 할 수 없습니다.');

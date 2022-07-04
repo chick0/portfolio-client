@@ -7,7 +7,7 @@ export function getProject(uuid) {
     if (uuid.length == 36) {
         return `${HOST}/v3/project/${uuid}`;
     } else {
-        return false;
+        return undefined;
     }
 }
 
