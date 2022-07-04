@@ -46,10 +46,11 @@
         timeoutID = setTimeout(setFetchError, 1200);
     }
 
-    if (typeof url !== "string") {
+    if (url != undefined) {
         // 올바른 프로젝트 ID가 아님
         push("/");
     } else {
+        // @ts-ignore
         renderer.link = (href, title, text) => {
             return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
         };
@@ -84,22 +85,13 @@
 
             <div class="block buttons" id="buttons">
                 {#if project.github.length != 0}
-                    <a
-                        class="button is-dark"
-                        href="{project.github}"
-                        target="_blank">Github</a>
+                    <a class="button is-dark" href="{project.github}" target="_blank">Github</a>
                 {/if}
                 {#if project.web.length != 0}
-                    <a
-                        class="button is-link"
-                        href="{project.web}"
-                        target="_blank">Web</a>
+                    <a class="button is-link" href="{project.web}" target="_blank">Web</a>
                 {/if}
                 {#each buttons as button}
-                    <a
-                        class="button {button.color}"
-                        href="{button.url}"
-                        target="_blank">{button.text}</a>
+                    <a class="button {button.color}" href="{button.url}" target="_blank">{button.text}</a>
                 {/each}
             </div>
 
@@ -130,16 +122,8 @@
                         <button
                             class="button is-danger"
                             on:click="{() => {
-                                if (
-                                    confirm(
-                                        '해당 프로젝트를 삭제하시겠습니까? (1/2)'
-                                    )
-                                ) {
-                                    if (
-                                        confirm(
-                                            '해당 프로젝트를 정말로 삭제하시겠습니까? (2/2)'
-                                        )
-                                    ) {
+                                if (confirm('해당 프로젝트를 삭제하시겠습니까? (1/2)')) {
+                                    if (confirm('해당 프로젝트를 정말로 삭제하시겠습니까? (2/2)')) {
                                         fetch(url, {
                                             method: 'DELETE',
                                             headers: {
@@ -149,14 +133,10 @@
                                             .then((resp) => resp.json())
                                             .then((data) => {
                                                 if (data.status == true) {
-                                                    alert(
-                                                        '프로젝트가 삭제되었습니다.'
-                                                    );
+                                                    alert('프로젝트가 삭제되었습니다.');
                                                     push('/');
                                                 } else {
-                                                    alert(
-                                                        '프로젝트 삭제에 실패했습니다.'
-                                                    );
+                                                    alert('프로젝트 삭제에 실패했습니다.');
                                                 }
 
                                                 projectLoaded = true;
@@ -180,11 +160,7 @@
                         <button
                             class="button is-info"
                             on:click="{() => {
-                                if (
-                                    buttons.findIndex(
-                                        (e) => e.uuid == 'undefined'
-                                    ) == -1
-                                ) {
+                                if (buttons.findIndex((e) => e.uuid == 'undefined') == -1) {
                                     let newButton = {
                                         uuid: 'undefined',
                                         text: '이름 없는 버튼',
@@ -206,10 +182,7 @@
                         <div class="box">
                             <div class="field is-horizontal">
                                 <div class="field-label is-normal">
-                                    <label
-                                        class="label"
-                                        for="button-text-{button.uuid}"
-                                        >텍스트</label>
+                                    <label class="label" for="button-text-{button.uuid}">텍스트</label>
                                 </div>
                                 <div class="field-body">
                                     <div class="field">
@@ -226,10 +199,7 @@
 
                             <div class="field is-horizontal">
                                 <div class="field-label is-normal">
-                                    <label
-                                        class="label"
-                                        for="button-link-{button.uuid}"
-                                        >링크</label>
+                                    <label class="label" for="button-link-{button.uuid}">링크</label>
                                 </div>
                                 <div class="field-body">
                                     <div class="field">
@@ -246,26 +216,17 @@
 
                             <div class="field is-horizontal">
                                 <div class="field-label is-normal">
-                                    <label
-                                        class="label"
-                                        for="button-color-{button.uuid}"
-                                        >색상</label>
+                                    <label class="label" for="button-color-{button.uuid}">색상</label>
                                 </div>
                                 <div class="field-body">
                                     <div class="field">
                                         <div class="control">
                                             <div class="select is-fullwidth">
-                                                <select
-                                                    id="button-color-{button.uuid}"
-                                                    bind:value="{button.color}">
+                                                <select id="button-color-{button.uuid}" bind:value="{button.color}">
                                                     {#each buttonColors as color}
                                                         <option
-                                                            class="{color.replace(
-                                                                'is-',
-                                                                'has-text-'
-                                                            )}"
-                                                            selected="{color ==
-                                                                button.color}"
+                                                            class="{color.replace('is-', 'has-text-')}"
+                                                            selected="{color == button.color}"
                                                             value="{color}">
                                                             {color}
                                                         </option>
@@ -289,56 +250,31 @@
                                             delete body['uuid'];
 
                                             if (button.uuid == 'undefined') {
-                                                fetch(
-                                                    buttonCreate(params.uuid),
-                                                    {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            Authorization:
-                                                                getToken(),
-                                                            'Content-Type':
-                                                                'application/json',
-                                                        },
-                                                        body: JSON.stringify(
-                                                            body
-                                                        ),
-                                                    }
-                                                )
+                                                fetch(buttonCreate(params.uuid), {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        Authorization: getToken(),
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                    body: JSON.stringify(body),
+                                                })
                                                     .then((resp) => resp.json())
                                                     .then((json) => {
-                                                        const index =
-                                                            buttons.findIndex(
-                                                                (e) =>
-                                                                    e.uuid ==
-                                                                    'undefined'
-                                                            );
+                                                        const index = buttons.findIndex((e) => e.uuid == 'undefined');
                                                         buttons[index] = json;
                                                     });
                                             } else {
-                                                fetch(
-                                                    buttonUpdate(button.uuid),
-                                                    {
-                                                        method: 'PATCH',
-                                                        headers: {
-                                                            Authorization:
-                                                                getToken(),
-                                                            'Content-Type':
-                                                                'application/json',
-                                                        },
-                                                        body: JSON.stringify(
-                                                            body
-                                                        ),
-                                                    }
-                                                )
+                                                fetch(buttonUpdate(button.uuid), {
+                                                    method: 'PATCH',
+                                                    headers: {
+                                                        Authorization: getToken(),
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                    body: JSON.stringify(body),
+                                                })
                                                     .then((resp) => resp.json())
                                                     .then((json) => {
-                                                        buttons[
-                                                            buttons.findIndex(
-                                                                (e) =>
-                                                                    e.uuid ==
-                                                                    json.uuid
-                                                            )
-                                                        ] = json;
+                                                        buttons[buttons.findIndex((e) => e.uuid == json.uuid)] = json;
                                                     });
                                             }
                                         }}">
@@ -350,43 +286,24 @@
                                         class="button is-danger is-light is-fullwidth"
                                         on:click="{() => {
                                             if (button.uuid == 'undefined') {
-                                                buttons = buttons.filter(
-                                                    (e) => {
-                                                        return (
-                                                            e.uuid !=
-                                                            'undefined'
-                                                        );
-                                                    }
-                                                );
+                                                buttons = buttons.filter((e) => {
+                                                    return e.uuid != 'undefined';
+                                                });
                                             } else {
-                                                fetch(
-                                                    buttonUpdate(button.uuid),
-                                                    {
-                                                        method: 'DELETE',
-                                                        headers: {
-                                                            Authorization:
-                                                                getToken(),
-                                                        },
-                                                    }
-                                                )
+                                                fetch(buttonUpdate(button.uuid), {
+                                                    method: 'DELETE',
+                                                    headers: {
+                                                        Authorization: getToken(),
+                                                    },
+                                                })
                                                     .then((resp) => resp.json())
                                                     .then((json) => {
-                                                        if (
-                                                            json.status === true
-                                                        ) {
-                                                            buttons =
-                                                                buttons.filter(
-                                                                    (e) => {
-                                                                        return (
-                                                                            e.uuid !=
-                                                                            button.uuid
-                                                                        );
-                                                                    }
-                                                                );
+                                                        if (json.status === true) {
+                                                            buttons = buttons.filter((e) => {
+                                                                return e.uuid != button.uuid;
+                                                            });
                                                         } else {
-                                                            alert(
-                                                                '오류가 발생했습니다.'
-                                                            );
+                                                            alert('오류가 발생했습니다.');
                                                         }
                                                     });
                                             }
@@ -452,18 +369,10 @@
             {#if fetchError == true}
                 <div class="notification is-danger is-light">
                     <div class="content is-medium">
-                        <p>
-                            서버 오류로 인해 프로젝트 정보를 불러오는데
-                            실패했습니다.
-                        </p>
-                        <p>
-                            아래의 버튼을 클릭해 서버의 상태를 확인 할 수
-                            있습니다.
-                        </p>
+                        <p>서버 오류로 인해 프로젝트 정보를 불러오는데 실패했습니다.</p>
+                        <p>아래의 버튼을 클릭해 서버의 상태를 확인 할 수 있습니다.</p>
                     </div>
-                    <a class="button is-danger" href="{config.url.status}">
-                        서버 상태 확인하기
-                    </a>
+                    <a class="button is-danger" href="{config.url.status}"> 서버 상태 확인하기 </a>
                 </div>
             {/if}
         </div>

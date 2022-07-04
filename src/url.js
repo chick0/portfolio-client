@@ -1,15 +1,13 @@
 import { config } from "./config.js";
 
-export const HOST =
-    // eslint-disable-next-line no-undef
-    isProduction === true ? config.url.mypt : "http://localhost:19564";
+export const HOST = import.meta.env.PROD === true ? config.url.mypt : "http://localhost:19564";
 
 // 프로젝트 정보 조회
 export function getProject(uuid) {
     if (uuid.length == 36) {
         return `${HOST}/v3/project/${uuid}`;
     } else {
-        return false;
+        return undefined;
     }
 }
 

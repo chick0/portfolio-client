@@ -18,14 +18,10 @@ function serve() {
     return {
         writeBundle() {
             if (server) return;
-            server = require("child_process").spawn(
-                "npm",
-                ["run", "start", "--", "--dev"],
-                {
-                    stdio: ["ignore", "inherit", "inherit"],
-                    shell: true,
-                }
-            );
+            server = require("child_process").spawn("npm", ["run", "start", "--", "--dev"], {
+                stdio: ["ignore", "inherit", "inherit"],
+                shell: true,
+            });
 
             process.on("SIGTERM", toExit);
             process.on("exit", toExit);
@@ -46,14 +42,8 @@ export default {
             preventAssignment: true,
             values: {
                 isProduction: production,
-                commitId: require("child_process")
-                    .execSync("git rev-parse HEAD")
-                    .toString()
-                    .trim(),
-                gitRepoURL: require("child_process")
-                    .execSync("git remote get-url origin")
-                    .toString()
-                    .trim(),
+                commitId: require("child_process").execSync("git rev-parse HEAD").toString().trim(),
+                gitRepoURL: require("child_process").execSync("git remote get-url origin").toString().trim(),
             },
         }),
         svelte({

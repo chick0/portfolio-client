@@ -1,33 +1,39 @@
-// Home
-import Home from "./routes/Home.svelte";
-// Auth
-import Auth from "./routes/Auth.svelte";
-import Logout from "./routes/Logout.svelte";
-import Session from "./routes/Session.svelte";
-// Project
-import NewProject from "./routes/NewProject.svelte";
-import Project from "./routes/Project.svelte";
-import ProjectEdit from "./routes/ProjectEdit.svelte";
-// Storage
-import Storage from "./routes/Storage.svelte";
-// etc..
-import Build from "./routes/Build.svelte";
-import NotFound from "./NotFound.svelte";
+import { wrap } from "svelte-spa-router/wrap";
 
-// Routes
+import Home from "./routes/Home.svelte";
+import Project from "./routes/Project.svelte";
+
 export default {
     "/": Home,
 
-    "/auth": Auth,
-    "/auth/logout": Logout,
-    "/auth/session": Session,
+    "/auth": wrap({
+        asyncComponent: () => import("./routes/Auth.svelte"),
+    }),
+    "/auth/logout": wrap({
+        asyncComponent: () => import("./routes/Logout.svelte"),
+    }),
+    "/auth/session": wrap({
+        asyncComponent: () => import("./routes/Session.svelte"),
+    }),
 
-    "/new-project": NewProject,
+    "/new-project": wrap({
+        asyncComponent: () => import("./routes/NewProject.svelte"),
+    }),
+
     "/project/:uuid": Project,
-    "/project/:uuid/edit": ProjectEdit,
+    "/project/:uuid/edit": wrap({
+        asyncComponent: () => import("./routes/ProjectEdit.svelte"),
+    }),
 
-    "/storage": Storage,
+    "/storage": wrap({
+        asyncComponent: () => import("./routes/Storage.svelte"),
+    }),
 
-    "/build": Build,
-    "*": NotFound,
+    "/build": wrap({
+        asyncComponent: () => import("./routes/Build.svelte"),
+    }),
+
+    "*": wrap({
+        asyncComponent: () => import("./NotFound.svelte"),
+    }),
 };

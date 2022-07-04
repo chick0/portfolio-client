@@ -5,10 +5,10 @@
     import { push } from "svelte-spa-router";
 
     // 세션 스토리지에 현재 상태를 저장할 때 사용할 키
-    const AUTH_STATUS = "mypt_auth_restore_required";
+    const AUTH_STAT = "mypt_auth_status";
     const AUTH_STEP = "mypt_auth_step";
     const AUTH_USER = "mypt_auth_user_id";
-    const AUTH_REQUEST = "mypt_auth_request_id";
+    const AUTH_REQU = "mypt_auth_request_id";
 
     // 로그인 화면 표시 여부
     let isLoginChecked = false;
@@ -46,10 +46,10 @@
     let code = "";
 
     // 세션 스토리지에 저장된 상태를 복구해야하는지 검사
-    if (sessionStorage.getItem(AUTH_STATUS) === "true") {
-        step = sessionStorage.getItem(AUTH_STEP);
-        user_id = sessionStorage.getItem(AUTH_USER);
-        request_id = sessionStorage.getItem(AUTH_REQUEST);
+    if (sessionStorage.getItem(AUTH_STAT) === "true") {
+        step = Number(sessionStorage.getItem(AUTH_STEP));
+        user_id = Number(sessionStorage.getItem(AUTH_USER));
+        request_id = Number(sessionStorage.getItem(AUTH_REQU));
     }
 
     function goNext(keyBoardDown) {
@@ -68,9 +68,7 @@
             alert("이메일과 비밀번호를 입력해주세요.");
             // 이메일과 비번 입력창에 빨간 테두리 생성
             document.getElementById("email-input").classList.add("is-danger");
-            document
-                .getElementById("password-input")
-                .classList.add("is-danger");
+            document.getElementById("password-input").classList.add("is-danger");
         } else {
             // 로그인 요청 처리중 상태로 변경
             isLoginChecked = false;
@@ -101,10 +99,10 @@
                         request_id = data.request_id;
 
                         // 세션 스토리지를 활용해 현재 상태 저장
-                        sessionStorage.setItem(AUTH_STATUS, "true");
-                        sessionStorage.setItem(AUTH_STEP, 2);
-                        sessionStorage.setItem(AUTH_USER, user_id);
-                        sessionStorage.setItem(AUTH_REQUEST, request_id);
+                        sessionStorage.setItem(AUTH_STAT, "true");
+                        sessionStorage.setItem(AUTH_STEP, "2");
+                        sessionStorage.setItem(AUTH_USER, user_id.toString());
+                        sessionStorage.setItem(AUTH_REQU, request_id.toString());
                     } else {
                         alert(data.detail.alert);
                     }
@@ -161,11 +159,7 @@
                 <div class="field">
                     <label class="label" for="email-input">이메일</label>
                     <div class="control">
-                        <input
-                            id="email-input"
-                            class="input"
-                            type="email"
-                            bind:value="{email}" />
+                        <input id="email-input" class="input" type="email" bind:value="{email}" />
                     </div>
                 </div>
                 <div class="field">
@@ -182,9 +176,8 @@
 
                 <div class="field">
                     <div class="control">
-                        <button
-                            class="button is-primary is-light is-large is-fullwidth"
-                            on:click="{doLogin}">다음</button>
+                        <button class="button is-primary is-light is-large is-fullwidth" on:click="{doLogin}"
+                            >다음</button>
                     </div>
                 </div>
             </div>
@@ -198,19 +191,13 @@
                 <div class="field">
                     <label class="label" for="code-input">인증 코드</label>
                     <div class="control">
-                        <input
-                            id="code-input"
-                            class="input"
-                            type="tel"
-                            bind:value="{code}"
-                            on:keypress="{goNext}" />
+                        <input id="code-input" class="input" type="tel" bind:value="{code}" on:keypress="{goNext}" />
                     </div>
                 </div>
                 <div class="field">
                     <div class="control">
-                        <button
-                            class="button is-danger is-light is-large is-fullwidth"
-                            on:click="{verifyCode}">다음</button>
+                        <button class="button is-danger is-light is-large is-fullwidth" on:click="{verifyCode}"
+                            >다음</button>
                     </div>
                 </div>
             </div>
