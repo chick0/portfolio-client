@@ -5,10 +5,10 @@
     import { push } from "svelte-spa-router";
 
     // 세션 스토리지에 현재 상태를 저장할 때 사용할 키
-    const AUTH_STATUS = "mypt_auth_restore_required";
+    const AUTH_STAT = "mypt_auth_status";
     const AUTH_STEP = "mypt_auth_step";
     const AUTH_USER = "mypt_auth_user_id";
-    const AUTH_REQUEST = "mypt_auth_request_id";
+    const AUTH_REQU = "mypt_auth_request_id";
 
     // 로그인 화면 표시 여부
     let isLoginChecked = false;
@@ -46,10 +46,10 @@
     let code = "";
 
     // 세션 스토리지에 저장된 상태를 복구해야하는지 검사
-    if (sessionStorage.getItem(AUTH_STATUS) === "true") {
+    if (sessionStorage.getItem(AUTH_STAT) === "true") {
         step = Number(sessionStorage.getItem(AUTH_STEP));
         user_id = Number(sessionStorage.getItem(AUTH_USER));
-        request_id = Number(sessionStorage.getItem(AUTH_REQUEST));
+        request_id = Number(sessionStorage.getItem(AUTH_REQU));
     }
 
     function goNext(keyBoardDown) {
@@ -99,10 +99,10 @@
                         request_id = data.request_id;
 
                         // 세션 스토리지를 활용해 현재 상태 저장
-                        sessionStorage.setItem(AUTH_STATUS, "true");
-                        sessionStorage.setItem(AUTH_STEP, '2');
+                        sessionStorage.setItem(AUTH_STAT, "true");
+                        sessionStorage.setItem(AUTH_STEP, "2");
                         sessionStorage.setItem(AUTH_USER, user_id.toString());
-                        sessionStorage.setItem(AUTH_REQUEST, request_id.toString());
+                        sessionStorage.setItem(AUTH_REQU, request_id.toString());
                     } else {
                         alert(data.detail.alert);
                     }
