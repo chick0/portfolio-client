@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>chick_0</title>
-        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="keywords" content="chick_0, ch1ck_0, chick0">
         <meta name="description" content="제 프로젝트를 소개합니다.">
         <meta property="og:type" content="website">
@@ -12,15 +12,14 @@
         <meta property="og:description" content="제 프로젝트를 소개합니다.">
         <link rel="icon" type="image/png" href="/favicon.png">
         <link rel="stylesheet" href="/bulma.min.css">
+
         <style>/*  set background color for footer */
             html{background-color:#FAFAFA;}
             body{background-color:#FFFFFF;}
         </style>
     </head>
     <body>
-        <script defer src="/build/bundle.js"></script>
-        <script>// remove index.html in path            
-            if(location.pathname.indexOf("index.html") == 1) location.replace("/" + location.hash);
-        </script>
+        <div id="app"></div>
+        <script type="module" src="/src/main.js"></script>
     </body>
 </html>

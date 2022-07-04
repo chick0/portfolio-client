@@ -68,9 +68,7 @@
             alert("이메일과 비밀번호를 입력해주세요.");
             // 이메일과 비번 입력창에 빨간 테두리 생성
             document.getElementById("email-input").classList.add("is-danger");
-            document
-                .getElementById("password-input")
-                .classList.add("is-danger");
+            document.getElementById("password-input").classList.add("is-danger");
         } else {
             // 로그인 요청 처리중 상태로 변경
             isLoginChecked = false;
@@ -161,11 +159,7 @@
                 <div class="field">
                     <label class="label" for="email-input">이메일</label>
                     <div class="control">
-                        <input
-                            id="email-input"
-                            class="input"
-                            type="email"
-                            bind:value="{email}" />
+                        <input id="email-input" class="input" type="email" bind:value="{email}" />
                     </div>
                 </div>
                 <div class="field">
@@ -182,9 +176,8 @@
 
                 <div class="field">
                     <div class="control">
-                        <button
-                            class="button is-primary is-light is-large is-fullwidth"
-                            on:click="{doLogin}">다음</button>
+                        <button class="button is-primary is-light is-large is-fullwidth" on:click="{doLogin}"
+                            >다음</button>
                     </div>
                 </div>
             </div>
@@ -198,19 +191,13 @@
                 <div class="field">
                     <label class="label" for="code-input">인증 코드</label>
                     <div class="control">
-                        <input
-                            id="code-input"
-                            class="input"
-                            type="tel"
-                            bind:value="{code}"
-                            on:keypress="{goNext}" />
+                        <input id="code-input" class="input" type="tel" bind:value="{code}" on:keypress="{goNext}" />
                     </div>
                 </div>
                 <div class="field">
                     <div class="control">
-                        <button
-                            class="button is-danger is-light is-large is-fullwidth"
-                            on:click="{verifyCode}">다음</button>
+                        <button class="button is-danger is-light is-large is-fullwidth" on:click="{verifyCode}"
+                            >다음</button>
                     </div>
                 </div>
             </div>

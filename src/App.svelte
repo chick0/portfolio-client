@@ -4,6 +4,10 @@
     import routes from "./routes.js";
     import { config } from "./config.js";
 
+    if (window.location.pathname.indexOf("index.html") == 1) {
+        window.location.replace("/" + window.location.hash);
+    }
+
     // 라우터 경로 업데이트 감지
     location.subscribe((path) => {
         // 경로가 프로젝트 경로라면

@@ -6,9 +6,6 @@
     import { pageStore, scrollStore, tagStore } from "../store.js";
     import { config } from "../config.js";
 
-    // eslint-disable-next-line no-undef
-    let env = isProduction;
-
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
     // 태그 조회에서 사용할 변수
@@ -250,11 +247,7 @@
             // 마지막 페이지보다 4만큼 작은 수 부터 목록에 추가
             for (let tmp = lastPage - 4; tmp <= lastPage; tmp++) {
                 // 단 중복되어서는 안되고, 1보다 크고 최대 페이지 보다는 작아야 함
-                if (
-                    pages.indexOf(tmp) == -1 &&
-                    1 <= tmp &&
-                    tmp <= pageData.max
-                ) {
+                if (pages.indexOf(tmp) == -1 && 1 <= tmp && tmp <= pageData.max) {
                     pages.push(tmp);
                 }
             }
@@ -272,19 +265,11 @@
         <h1 class="title is-1" on:click="{nameClicked}">{config.name}</h1>
         <p class="subtitle">제 프로젝트를 소개합니다.</p>
         <div class="buttons">
-            <a
-                class="button is-dark is-medium"
-                href="{config.github}"
-                target="_blank">Github</a>
-            <a
-                class="button is-link is-medium"
-                href="mailto:{config.email}"
-                target="_blank">Email</a>
+            <a class="button is-dark is-medium" href="{config.github}" target="_blank">Github</a>
+            <a class="button is-link is-medium" href="mailto:{config.email}" target="_blank">Email</a>
         </div>
-        {#if env == false}
-            <div class="notification is-danger is-light">
-                해당 빌드는 테스트 모드 입니다.
-            </div>
+        {#if import.meta.env.PROD == false}
+            <div class="notification is-danger is-light">해당 빌드는 테스트 모드 입니다.</div>
         {/if}
         {#if isLogined() == true}
             <div class="box">
@@ -332,18 +317,10 @@
             {#if fetchError == true}
                 <div class="notification is-danger is-light">
                     <div class="content is-medium">
-                        <p>
-                            서버 오류로 인해 프로젝트 목록을 불러오는데
-                            실패했습니다.
-                        </p>
-                        <p>
-                            아래의 버튼을 클릭해 서버의 상태를 확인 할 수
-                            있습니다.
-                        </p>
+                        <p>서버 오류로 인해 프로젝트 목록을 불러오는데 실패했습니다.</p>
+                        <p>아래의 버튼을 클릭해 서버의 상태를 확인 할 수 있습니다.</p>
                     </div>
-                    <a class="button is-danger" href="{config.url.status}">
-                        서버 상태 확인하기
-                    </a>
+                    <a class="button is-danger" href="{config.url.status}"> 서버 상태 확인하기 </a>
                 </div>
             {/if}
         </div>

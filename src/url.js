@@ -1,8 +1,7 @@
 import { config } from "./config.js";
 
 export const HOST =
-    // eslint-disable-next-line no-undef
-    isProduction === true ? config.url.mypt : "http://localhost:19564";
+    import.meta.env.PROD === true ? config.url.mypt : "http://localhost:19564";
 
 // 프로젝트 정보 조회
 export function getProject(uuid) {

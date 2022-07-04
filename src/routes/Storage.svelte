@@ -1,12 +1,7 @@
 <script>
     import { push } from "svelte-spa-router";
     import { isLogined, getToken } from "../storage.js";
-    import {
-        storageList,
-        storageUpload,
-        storageManage,
-        storageDownload,
-    } from "../url.js";
+    import { storageList, storageUpload, storageManage, storageDownload } from "../url.js";
 
     if (!isLogined()) {
         push("/");
@@ -19,8 +14,7 @@
     function resetNewUpload() {
         newFile = false;
         document.getElementById("storage-upload").value = "";
-        document.getElementById("storage-upload-name").innerText =
-            "선택된 파일 없음";
+        document.getElementById("storage-upload-name").innerText = "선택된 파일 없음";
     }
 
     function fetchStorageList() {
@@ -66,10 +60,7 @@
                         }
 
                         let data = new FormData();
-                        data.append(
-                            'file',
-                            document.getElementById('storage-upload').files[0]
-                        );
+                        data.append('file', document.getElementById('storage-upload').files[0]);
 
                         fetch(storageUpload(), {
                             method: 'POST',
@@ -95,8 +86,7 @@
                 hidden="hidden"
                 on:change="{(e) => {
                     const file = e.target.files[0];
-                    document.getElementById('storage-upload-name').innerText =
-                        file.name;
+                    document.getElementById('storage-upload-name').innerText = file.name;
 
                     if (file.size >= 1024 * 1024 * 99) {
                         alert('해당 파일은 업로드 할 수 없습니다.');
@@ -130,18 +120,14 @@
                         <button
                             class="button is-danger is-light"
                             on:click="{() => {
-                                let target = document.getElementById(
-                                    `storage-${file.uuid}`
-                                );
+                                let target = document.getElementById(`storage-${file.uuid}`);
 
                                 if (target.innerHTML.length == 0) {
                                     const updateHandle = (e) => {
                                         const replace = e.target.files[0];
 
                                         if (replace.size >= 1024 * 1024 * 99) {
-                                            alert(
-                                                '해당 파일은 업로드 할 수 없습니다.'
-                                            );
+                                            alert('해당 파일은 업로드 할 수 없습니다.');
                                             target.innerHTML = '';
                                         } else {
                                             let data = new FormData();
@@ -156,13 +142,7 @@
                                             })
                                                 .then((resp) => resp.json())
                                                 .then((json) => {
-                                                    files[
-                                                        files.findIndex(
-                                                            (e) =>
-                                                                e.uuid ==
-                                                                file.uuid
-                                                        )
-                                                    ] = json;
+                                                    files[files.findIndex((e) => e.uuid == file.uuid)] = json;
 
                                                     files = files;
                                                     target.innerHTML = '';
@@ -184,11 +164,7 @@
                         <button
                             class="button is-danger"
                             on:click="{() => {
-                                if (
-                                    confirm(
-                                        `'${file.name}'(을)를 삭제하시겠습니까?`
-                                    )
-                                ) {
+                                if (confirm(`'${file.name}'(을)를 삭제하시겠습니까?`)) {
                                     fetch(storageManage(file.uuid), {
                                         method: 'DELETE',
                                         headers: {
@@ -212,12 +188,7 @@
                             }}">
                             파일 삭제
                         </button>
-                        <a
-                            class="button is-link"
-                            href="{storageDownload(file.uuid)}"
-                            target="_blank">
-                            다운로드
-                        </a>
+                        <a class="button is-link" href="{storageDownload(file.uuid)}" target="_blank"> 다운로드 </a>
                     </div>
                 </div>
             {/each}

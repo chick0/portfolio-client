@@ -83,9 +83,7 @@
                                     if (data.status == true) {
                                         alert('해당 세션이 취소되었습니다.');
 
-                                        const index = sessionList.findIndex(
-                                            (e) => e.id == ctx.id
-                                        );
+                                        const index = sessionList.findIndex((e) => e.id == ctx.id);
                                         sessionList[index].revoked = true;
                                     } else {
                                         alert(data.detail.alert);
@@ -100,8 +98,7 @@
                             <p><b class="has-text-danger">* 만료된 세션</b></p>
                         {:else}
                             <p>
-                                <b class="has-text-success"
-                                    >* 만료되지 않은 세션</b>
+                                <b class="has-text-success">* 만료되지 않은 세션</b>
                             </p>
                         {/if}
                         {#if ctx.same == true}
