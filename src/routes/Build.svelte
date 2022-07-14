@@ -2,6 +2,9 @@
     import { HOST } from "../url.js";
 
     let version = APP_VERSION;
+    if (!version.startsWith("v")) {
+        version = "v" + version;
+    }
 
     let git_hash = GIT_HASH.slice(0, 7);
     let git_remote = GIT_REMOTE;
