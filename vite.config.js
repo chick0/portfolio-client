@@ -27,9 +27,13 @@ export default defineConfig({
     define: {
         GIT_HASH: JSON.stringify(execSync("git rev-parse HEAD").toString().trim()),
         GIT_REMOTE: JSON.stringify(execSync("git remote get-url origin").toString().trim()),
-
         APP_VERSION: JSON.stringify(process.env.npm_package_version),
-
         STATUS_URL: JSON.stringify("https://status.ch1ck.xyz"),
+
+        // app config
+        NAME: JSON.stringify("chick_0"),
+        GITHUB: JSON.stringify("https://github.com/chick0"),
+        EMAIL: JSON.stringify("chick_0@ch1ck.xyz"),
+        BLOG: JSON.stringify("https://blog.ch1ck.xyz")
     },
 });

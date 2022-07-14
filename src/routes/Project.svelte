@@ -3,9 +3,10 @@
     import { Renderer, setOptions, parse } from "marked";
     import { getProject, buttonCreate, buttonUpdate } from "../url.js";
     import { isLogined, getToken } from "../storage.js";
-    import { config } from "../config.js";
     import { tagStore } from "../store.js";
     export let params = {};
+
+    let status_url = STATUS_URL;
 
     let projectLoaded = false;
     let url = getProject(params.uuid);
@@ -372,7 +373,7 @@
                         <p>서버 오류로 인해 프로젝트 정보를 불러오는데 실패했습니다.</p>
                         <p>아래의 버튼을 클릭해 서버의 상태를 확인 할 수 있습니다.</p>
                     </div>
-                    <a class="button is-danger" href="{config.url.status}"> 서버 상태 확인하기 </a>
+                    <a class="button is-danger" href="{status_url}"> 서버 상태 확인하기 </a>
                 </div>
             {/if}
         </div>

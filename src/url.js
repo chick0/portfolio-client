@@ -1,6 +1,7 @@
-import { config } from "./config.js";
-
-export const HOST = import.meta.env.PROD === true ? config.url.mypt : "http://localhost:19564";
+export const HOST =
+    import.meta.env.PROD === true
+        ? "https://mypt.ch1ck.xyz"
+        : "http://localhost:28282";
 
 // 프로젝트 정보 조회
 export function getProject(uuid) {

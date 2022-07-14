@@ -4,7 +4,11 @@
     import { getProjects, getProjectsWithTags } from "../url.js";
     import { isLogined } from "../storage.js";
     import { pageStore, scrollStore, tagStore } from "../store.js";
-    import { config } from "../config.js";
+
+    let name = NAME;
+    let github = GITHUB;
+    let email = EMAIL;
+    let status_url = STATUS_URL;
 
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
@@ -262,11 +266,11 @@
 
 <section class="section">
     <div class="container">
-        <h1 class="title is-1" on:click="{nameClicked}">{config.name}</h1>
+        <h1 class="title is-1" on:click="{nameClicked}">{name}</h1>
         <p class="subtitle">제 프로젝트를 소개합니다.</p>
         <div class="buttons">
-            <a class="button is-dark is-medium" href="{config.github}" target="_blank">Github</a>
-            <a class="button is-link is-medium" href="mailto:{config.email}" target="_blank">Email</a>
+            <a class="button is-dark is-medium" href="{github}" target="_blank">Github</a>
+            <a class="button is-link is-medium" href="mailto:{email}" target="_blank">Email</a>
         </div>
         {#if import.meta.env.PROD == false}
             <div class="notification is-danger is-light">해당 빌드는 테스트 모드 입니다.</div>
@@ -320,7 +324,7 @@
                         <p>서버 오류로 인해 프로젝트 목록을 불러오는데 실패했습니다.</p>
                         <p>아래의 버튼을 클릭해 서버의 상태를 확인 할 수 있습니다.</p>
                     </div>
-                    <a class="button is-danger" href="{config.url.status}"> 서버 상태 확인하기 </a>
+                    <a class="button is-danger" href="{status_url}"> 서버 상태 확인하기 </a>
                 </div>
             {/if}
         </div>
