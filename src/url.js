@@ -1,7 +1,4 @@
-export const HOST =
-    import.meta.env.PROD === true
-        ? "https://mypt.ch1ck.xyz"
-        : "http://localhost:28282";
+export const HOST = import.meta.env.PROD === true ? API_HOST : "http://localhost:19564";
 
 // 프로젝트 정보 조회
 export function getProject(uuid) {
