@@ -265,7 +265,7 @@ __metadata:
     "@sveltejs/vite-plugin-svelte": ^1.0.1
     bulma: ^0.9.4
     dotenv: ^16.0.1
-    marked: ^4.0.17
+    marked: ^4.0.18
     postcss: ^8.4.14
     prettier: ^2.7.1
     prettier-plugin-svelte: ^2.7.0
@@ -1002,12 +1002,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.0.17":
-  version: 4.0.17
-  resolution: "marked@npm:4.0.17"
+"marked@npm:^4.0.18":
+  version: 4.0.18
+  resolution: "marked@npm:4.0.18"
   bin:
     marked: bin/marked.js
-  checksum: 33a3c43a20b47bddaf045a59bfc7c3d41cc321931cc663ed231ca3b5b3b195fb2ac2973e687c2afd65b79539c14619baa07d19793f70130160f0af80c06d9b3a
+  checksum: a13e886d5059a8500a6fd552feecc16e18fc3636aa491fce372384b1fdea67e323d67ac49f7618f6977e66ca96e39f27400eb5c1273d5ee9c2301e8c33e90dce
   languageName: node
   linkType: hard
 
