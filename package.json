@@ -7,7 +7,7 @@
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview",
-        "p": "prettier --write \"{,!(node_modules|dist|public)/**/}*.{js,json,svelte}\""
+        "p": "prettier --write \"{,!(.yarn|node_modules|dist|public)/**/}*.{js,json,svelte,scss}\""
     },
     "devDependencies": {
         "@fullhuman/postcss-purgecss": "^4.1.3",
