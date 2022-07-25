@@ -123,17 +123,8 @@
     // 프로젝트를 불러오고 있는지 체크할때 사용할 변수
     let projectsLoaded = false;
 
-    let timeoutID = undefined;
+    // 프로젝트 목록 로딩 실패
     let fetchError = false;
-    const setFetchError = () => {
-        fetchError = true;
-    };
-
-    $: if (projectsLoaded === true) {
-        clearTimeout(timeoutID);
-    } else {
-        timeoutID = setTimeout(setFetchError, 1200);
-    }
 
     function fetchProject() {
         // API 요청을 보낼 URL 가져오기
@@ -183,6 +174,9 @@
                         pushLock = false;
                     }
                 }
+            })
+            .catch(() => {
+                fetchError = true;
             });
     }
 

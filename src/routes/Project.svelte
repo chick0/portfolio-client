@@ -35,17 +35,7 @@
         "is-danger is-light",
     ];
 
-    let timeoutID = undefined;
     let fetchError = false;
-    const setFetchError = () => {
-        fetchError = true;
-    };
-
-    $: if (projectLoaded === true) {
-        clearTimeout(timeoutID);
-    } else {
-        timeoutID = setTimeout(setFetchError, 1200);
-    }
 
     if (url != undefined) {
         // 올바른 프로젝트 ID가 아님
@@ -67,6 +57,9 @@
                 Object.assign(project, data);
                 projectLoaded = true;
                 document.title = project.title;
+            })
+            .catch(() => {
+                fetchError = true;
             });
 
         fetch(buttonUpdate(params.uuid))
@@ -360,8 +353,6 @@
         }}">
         프로젝트 목록으로 이동
     </button>
-
-    <section class="section"></section>
 {:else}
     <section class="section">
         <div class="container">
