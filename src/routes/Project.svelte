@@ -352,6 +352,8 @@
         }}">
         프로젝트 목록으로 이동
     </button>
+
+    <div style="padding-bottom: 10px"></div>
 {:else}
     <section class="section">
         <div class="container">
