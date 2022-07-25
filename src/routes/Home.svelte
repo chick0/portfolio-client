@@ -1,6 +1,7 @@
 <script>
     import { get } from "svelte/store";
     import { push } from "svelte-spa-router";
+    import Error from "../Error.svelte";
     import { getProjects, getProjectsWithTags } from "../url.js";
     import { isLogined } from "../storage.js";
     import { pageStore, scrollStore, tagStore } from "../store.js";
@@ -8,7 +9,6 @@
     let name = NAME;
     let github = GITHUB;
     let email = EMAIL;
-    let status_url = STATUS_URL;
 
     // 프로젝트 화면으로 이동하는 것 방지
     let pushLock = false;
@@ -313,13 +313,7 @@
             <h2 class="title is-2">잠시만요...</h2>
             <p class="subtitle">프로젝트 목록을 불러오고 있습니다...</p>
             {#if fetchError == true}
-                <div class="notification is-danger is-light">
-                    <div class="content is-medium">
-                        <p>서버 오류로 인해 프로젝트 목록을 불러오는데 실패했습니다.</p>
-                        <p>아래의 버튼을 클릭해 서버의 상태를 확인 할 수 있습니다.</p>
-                    </div>
-                    <a class="button is-danger" href="{status_url}"> 서버 상태 확인하기 </a>
-                </div>
+                <Error />
             {/if}
         </div>
     </section>

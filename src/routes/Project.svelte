@@ -1,12 +1,11 @@
 <script>
     import { push } from "svelte-spa-router";
     import { Renderer, setOptions, parse } from "marked";
+    import Error from "../Error.svelte";
     import { getProject, buttonCreate, buttonUpdate } from "../url.js";
     import { isLogined, getToken } from "../storage.js";
     import { tagStore } from "../store.js";
     export let params = {};
-
-    let status_url = STATUS_URL;
 
     let projectLoaded = false;
     let url = getProject(params.uuid);
@@ -359,13 +358,7 @@
             <h1 class="title is-1">잠시만요...</h1>
             <p class="subtitle">프로젝트 정보를 불러오고 있습니다...</p>
             {#if fetchError == true}
-                <div class="notification is-danger is-light">
-                    <div class="content is-medium">
-                        <p>서버 오류로 인해 프로젝트 정보를 불러오는데 실패했습니다.</p>
-                        <p>아래의 버튼을 클릭해 서버의 상태를 확인 할 수 있습니다.</p>
-                    </div>
-                    <a class="button is-danger" href="{status_url}"> 서버 상태 확인하기 </a>
-                </div>
+                <Error />
             {/if}
         </div>
     </section>
