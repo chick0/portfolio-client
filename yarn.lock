@@ -269,11 +269,11 @@ __metadata:
     postcss: ^8.4.14
     prettier: ^2.7.1
     prettier-plugin-svelte: ^2.7.0
-    sass: ^1.53.0
+    sass: ^1.54.0
     svelte: ^3.49.0
     svelte-preprocess: ^4.10.7
     svelte-spa-router: ^3.2.0
-    vite: ^3.0.0
+    vite: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -1452,16 +1452,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.53.0":
-  version: 1.53.0
-  resolution: "sass@npm:1.53.0"
+"sass@npm:^1.54.0":
+  version: 1.54.0
+  resolution: "sass@npm:1.54.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 4bcb0617d6a4d1f2c089a1cb5c32f65a9ee874b23559f2742fab07cf8478fb74ad20c0730cf9f93915d7dbfc258901f89970674228c3ac91c3883a0a62a0ddab
+  checksum: 7d3acf124d771e8811fce876ad37f786faafa9edce64b20dcf32bf6aed5116802c863d3311fd79e7e7682fcccc4dc684960be1365cffa7dad045be7251c40d70
   languageName: node
   linkType: hard
 
@@ -1722,9 +1722,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "vite@npm:3.0.0"
+"vite@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "vite@npm:3.0.3"
   dependencies:
     esbuild: ^0.14.47
     fsevents: ~2.3.2
@@ -1750,7 +1750,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 4920b5b0a4d4bd4a003121b2eb6ed41ac2ab69e6ab055db645e678c14e68d6eef780362d4d482cf439b576c37fb65dc9a7ebbbf90354e7ae362034a28eac9130
+  checksum: 0b15d6bb062ab56dd8a0d47262344dcb48423d658c153c88a8a41f9301a70f32dd0fa2c037fa39a0a7888be1005cb763aad94235f82439441a13cef5103c29c4
   languageName: node
   linkType: hard
 
