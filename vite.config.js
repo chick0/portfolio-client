@@ -37,7 +37,6 @@ export default defineConfig({
         NAME: JSON.stringify(process.env.c_NAME),
         GITHUB: JSON.stringify(process.env.c_GITHUB),
         EMAIL: JSON.stringify(process.env.c_EMAIL),
-        BLOG: JSON.stringify(process.env.c_BLOG),
 
         API_HOST: JSON.stringify(process.env.c_API_HOST),
         STATUS_URL: JSON.stringify(process.env.c_STATUS_URL),

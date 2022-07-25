@@ -10,7 +10,6 @@
     let name = NAME;
     let github = GITHUB;
     let email = EMAIL;
-    let blog = BLOG;
 
     // 라우터 경로 업데이트 감지
     location.subscribe((path) => {
@@ -35,9 +34,6 @@
             </div>
             <div class="column">
                 <a href="mailto:{email}">Email</a>
-            </div>
-            <div class="column">
-                <a href="{blog}">Blog</a>
             </div>
         </div>
     </div>
