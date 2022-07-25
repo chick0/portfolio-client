@@ -37,7 +37,7 @@
 
     let fetchError = false;
 
-    if (url != undefined) {
+    if (url == undefined) {
         // 올바른 프로젝트 ID가 아님
         push("/");
     } else {
