@@ -7,6 +7,16 @@
     import { tagStore } from "../store.js";
     export let params = {};
 
+    function getTarget(target_url) {
+        let host = new URL(target_url).host;
+
+        if (host == location.host) {
+            return "_self";
+        } else {
+            return "_blank";
+        }
+    }
+
     let projectLoaded = false;
     let url = getProject(params.uuid);
 
@@ -42,7 +52,7 @@
     } else {
         // @ts-ignore
         renderer.link = (href, title, text) => {
-            return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
+            return `<a target="${getTarget(href)}" rel="noreferrer" href="${href}">${text}</a>`;
         };
 
         setOptions({
@@ -84,7 +94,7 @@
                     <a class="button is-link" href="{project.web}" target="_blank">Web</a>
                 {/if}
                 {#each buttons as button}
-                    <a class="button {button.color}" href="{button.url}" target="_blank">{button.text}</a>
+                    <a class="button {button.color}" href="{getTarget(button.url)}" target="_blank">{button.text}</a>
                 {/each}
             </div>
 
