@@ -9,6 +9,7 @@ declare const APP_VERSION: string;
 declare const NAME: string;
 declare const GITHUB: string;
 declare const EMAIL: string;
+declare const REPORT_EMAIL: string;
 
 declare const API_HOST: string;
 declare const STATUS_URL: string;
