@@ -94,7 +94,8 @@
                     <a class="button is-link" href="{project.web}" target="_blank">Web</a>
                 {/if}
                 {#each buttons as button}
-                    <a class="button {button.color}" href="{getTarget(button.url)}" target="_blank">{button.text}</a>
+                    <a class="button {button.color}" href="{button.url}" target="{getTarget(button.url)}"
+                        >{button.text}</a>
                 {/each}
             </div>
 
