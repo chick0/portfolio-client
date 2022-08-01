@@ -1,6 +1,8 @@
 <script>
     import { HOST } from "../url.js";
 
+    let build_date = new Date(BUILD_DATE).toLocaleString();
+
     let version = APP_VERSION;
     if (!version.startsWith("v")) {
         version = "v" + version;
@@ -18,6 +20,11 @@
             <h5 class="title is-5">env</h5>
             <p><b>MODE</b>: {import.meta.env.MODE}</p>
             <p><b>SSR</b>: {import.meta.env.SSR}</p>
+        </div>
+
+        <div class="box">
+            <h5 class="title is-5">build date</h5>
+            <p>{build_date}</p>
         </div>
 
         <div class="box">
