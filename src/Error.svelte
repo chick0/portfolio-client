@@ -42,7 +42,9 @@
     <div class="buttons">
         <a class="button is-danger" href="{status_url}" target="_blank">서버 상태 확인하기</a>
         {#if try_count >= 3}
-            <a class="button is-link" href="mailto:{report_email}?subject=[{location.host}] 서버 오류 보고">서버 오류 제보하기</a>
+            <a class="button is-link" href="mailto:{report_email}?subject=[{location.host}] 서버 오류 보고">
+                서버 오류 제보하기
+            </a>
         {/if}
     </div>
 </div>
